@@ -1,0 +1,18 @@
+@model SharedHousingApp.Models.User
+
+<h2>Register</h2>
+
+<form asp-action="Register" method="post">
+    <label>Email:</label>
+    <input asp-for="Email" class="form-control" />
+    <br />
+    <label>Password:</label>
+    <input asp-for="Password" type="password" class="form-control" />
+    <br />
+    <label>Role (optional):</label>
+    <input asp-for="Role" class="form-control" />
+    <br />
+    <button type="submit" class="btn btn-success">Register</button>
+</form>
+
+@Html.ValidationSummary()

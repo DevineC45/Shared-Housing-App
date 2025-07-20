@@ -1,0 +1,15 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    var role = ViewData["Role"]?.ToString();
+}
+
+<h2>Welcome to your dashboard</h2>
+
+@if (role == "Landlord")
+{
+    <p>You are a landlord. You can post announcements and manage the calendar.</p>
+}
+else
+{
+    <p>You are a tenant. You can view chores and expenses here.</p>
+}

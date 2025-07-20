@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Welcome";
+}
+
+<div class="container-fluid bg-light p-5">
+    <div class="row align-items-center">
+        <div class="col-lg-6 text-center text-lg-start">
+            <h1 class="display-4 fw-bold">Welcome to SharedHousingApp</h1>
+            <p class="lead mt-3">
+                Your shared living assistant for managing chores, tracking expenses, <br />
+                and staying in sync with your housemates.
+            </p>
+            <div class="mt-4">
+                <a class="btn btn-primary btn-lg me-3" asp-controller="Users" asp-action="Login">Login</a>
+                <a class="btn btn-outline-secondary btn-lg" asp-controller="Users" asp-action="Register">Register</a>
+            </div>
+        </div>
+        <div class="col-lg-6 text-center mt-4 mt-lg-0">
+            <img src="~/img/hmates.png" class="img-fluid rounded shadow" alt="Landing image" />
+        </div>
+    </div>
+</div>
