@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "0QfVUybNVF/8Xvbv5J5XCby55b1vUGLFGhzax5WR9ig=",
+  "Hash": "FR4lTZjF0PszIQZt+aTKUXKV38BwpDokji8xCDD/89Y=",
   "Source": "SharedHousingApp",
   "BasePath": "_content/SharedHousingApp",
   "Mode": "Default",
@@ -1443,6 +1443,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmates.png",
+      "SourceId": "SharedHousingApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\",
+      "BasePath": "_content/SharedHousingApp",
+      "RelativePath": "img/hmates#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "hracf4pjau",
+      "Integrity": "fRCdp4hyVwsvWb+WnkRby9SbTlYLqzhHueF1S9ycUfI=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\hmates.png"
     },
     {
       "Identity": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\js\\site.js",
@@ -3320,6 +3341,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-wfFuuYm+Lh6RbCeeiUqxw334b/hIOkp5j9eokGUM1Y0="
+        }
+      ]
+    },
+    {
+      "Route": "img/hmates.hracf4pjau.png",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmates.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "614615"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fRCdp4hyVwsvWb+WnkRby9SbTlYLqzhHueF1S9ycUfI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 20 Jul 2025 16:33:25 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "hracf4pjau"
+        },
+        {
+          "Name": "label",
+          "Value": "img/hmates.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-fRCdp4hyVwsvWb+WnkRby9SbTlYLqzhHueF1S9ycUfI="
+        }
+      ]
+    },
+    {
+      "Route": "img/hmates.png",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmates.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "614615"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"fRCdp4hyVwsvWb+WnkRby9SbTlYLqzhHueF1S9ycUfI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 20 Jul 2025 16:33:25 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-fRCdp4hyVwsvWb+WnkRby9SbTlYLqzhHueF1S9ycUfI="
         }
       ]
     },

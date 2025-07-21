@@ -219,3 +219,4 @@ C:\Users\Conor\OneDrive - Ulster University\Desktop\COM814 - Project Module\Shar
 C:\Users\Conor\OneDrive - Ulster University\Desktop\COM814 - Project Module\SharedHousingApp\obj\Debug\net9.0\SharedHousingApp.pdb
 C:\Users\Conor\OneDrive - Ulster University\Desktop\COM814 - Project Module\SharedHousingApp\obj\Debug\net9.0\SharedHousingApp.genruntimeconfig.cache
 C:\Users\Conor\OneDrive - Ulster University\Desktop\COM814 - Project Module\SharedHousingApp\obj\Debug\net9.0\ref\SharedHousingApp.dll
+C:\Users\Conor\OneDrive - Ulster University\Desktop\COM814 - Project Module\SharedHousingApp\obj\Debug\net9.0\SharedHousingApp.sourcelink.json

@@ -1,0 +1,27 @@
+@model SharedHousingApp.Models.Chore
+
+@{
+    ViewData["Title"] = "Add Chore";
+}
+
+<h2>Add a New Chore</h2>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="AssignedToUserId" class="form-label"></label>
+        <input asp-for="AssignedToUserId" class="form-control" />
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="RepeatWeekly" class="form-check-input" />
+        <label asp-for="RepeatWeekly" class="form-check-label"></label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>

@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmates.png",
+      "PackagePath": "staticwebassets\\img\\hmates.png"
+    },
+    {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

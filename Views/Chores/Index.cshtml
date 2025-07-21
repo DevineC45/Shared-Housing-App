@@ -1,0 +1,36 @@
+@model IEnumerable<SharedHousingApp.Models.Chore>
+
+@{
+    ViewData["Title"] = "Chore List";
+}
+
+<h2>Chores</h2>
+
+<a class="btn btn-success mb-3" asp-action="Create">Add New Chore</a>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Assigned To</th>
+            <th>Complete</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var chore in Model)
+{
+    <tr>
+        <td>@chore.Title</td>
+        <td>@chore.AssignedToUserId</td>
+        <td>@chore.IsComplete</td>
+        <td>
+            <form asp-action="Complete" method="post">
+                <input type="hidden" name="id" value="@chore.Id" />
+                <button class="btn btn-sm btn-primary">Complete</button>
+            </form>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>
