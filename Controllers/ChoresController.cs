@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SharedHousingApp.Models;
 using SharedHousingApp.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SharedHousingApp.Controllers
 {
@@ -16,14 +17,16 @@ namespace SharedHousingApp.Controllers
         // GET: Chores
         public IActionResult Index()
         {
-            // Only allow tenants
             var role = HttpContext.Session.GetString("UserRole");
             if (role != "Tenant")
             {
                 return RedirectToAction("Login", "Users");
             }
 
-            var chores = _context.Chores.ToList();
+            var chores = _context.Chores
+                .Include(c => c.AssignedToUser) // 👈 this is what gives access to names
+                .ToList();
+
             return View(chores);
         }
 
@@ -46,10 +49,25 @@ namespace SharedHousingApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Automatically assign to the first tenant
+                var firstTenant = _context.Users
+                    .Where(u => u.Role == "Tenant")
+                    .OrderBy(u => u.Id)
+                    .FirstOrDefault();
+
+                if (firstTenant == null)
+                {
+                    ModelState.AddModelError("", "No tenants found to assign the chore.");
+                    return View(chore);
+                }
+
+                chore.AssignedToUserId = firstTenant.Id;
+
                 _context.Chores.Add(chore);
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(chore);
         }
 

@@ -1,4 +1,5 @@
 @model IEnumerable<SharedHousingApp.Models.Chore>
+    
 
 @{
     ViewData["Title"] = "Chore List";
@@ -22,7 +23,7 @@
 {
     <tr>
         <td>@chore.Title</td>
-        <td>@chore.AssignedToUserId</td>
+        <td>@chore.AssignedToUser?.Name</td>
         <td>@chore.IsComplete</td>
         <td>
             <form asp-action="Complete" method="post">
