@@ -30,6 +30,26 @@ namespace SharedHousingApp.Controllers
             return View(chores);
         }
 
+        public IActionResult MyChores()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            var role = HttpContext.Session.GetString("UserRole");
+
+            if (string.IsNullOrEmpty(userId) || role != "Tenant")
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
+            int id = int.Parse(userId);
+
+            var chores = _context.Chores
+                .Include(c => c.AssignedToUser)
+                .Where(c => c.AssignedToUserId == id)
+                .ToList();
+
+            return View(chores);
+        }
+
         // GET: Chores/Create
         public IActionResult Create()
         {

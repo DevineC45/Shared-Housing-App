@@ -1,0 +1,48 @@
+@model IEnumerable<SharedHousingApp.Models.Chore>
+
+@{
+    ViewData["Title"] = "My Chores";
+}
+
+<h2>My Chores</h2>
+
+@if (!Model.Any())
+{
+    <p>You have no chores assigned at the moment.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var chore in Model)
+        {
+            <tr>
+                <td>@chore.Title</td>
+                <td>
+                    @if (chore.IsComplete)
+                    {
+                        <span class="badge bg-success">Complete</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-warning text-dark">Pending</span>
+                    }
+                </td>
+                <td>
+                    <form asp-action="Complete" method="post">
+                        <input type="hidden" name="id" value="@chore.Id" />
+                        <button class="btn btn-sm btn-primary">Mark Complete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

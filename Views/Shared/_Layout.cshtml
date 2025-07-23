@@ -30,6 +30,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @if (userRole == "Tenant")
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Chores" asp-action="MyChores">My Chores</a>
+                            </li>
+                        }
                     </ul>
                     <ul class="navbar-nav">
                         @if (userId == null)
