@@ -1,0 +1,49 @@
+@model IEnumerable<SharedHousingApp.Models.Chore>
+
+@{
+    ViewData["Title"] = "Chore Schedule";
+}
+
+<h2 class="mb-4">Chore Schedule</h2>
+
+<div class="table-responsive">
+    <table class="table table-hover table-bordered align-middle">
+        <thead class="table-dark">
+            <tr>
+                <th>Chore</th>
+                <th>Assigned To</th>
+                <th>Status</th>
+                <th>Repeats Weekly?</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chore in Model)
+            {
+                <tr>
+                    <td>@chore.Title</td>
+                    <td>@chore.AssignedToUser?.Name ?? "Unassigned"</td>
+                    <td>
+                        @if (chore.IsComplete)
+                        {
+                            <span class="badge bg-success">Complete</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        }
+                    </td>
+                    <td>
+                        @if (chore.RepeatWeekly)
+                        {
+                            <span class="badge bg-info text-dark">Yes</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary">No</span>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
