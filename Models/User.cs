@@ -13,5 +13,7 @@ namespace SharedHousingApp.Models
         public required string Password { get; set; }
 
         public string Role { get; set; } = "Tenant"; // or "Landlord"
+
+        public List<Expense> SharedExpenses { get; set; } = new();
     }
 }
