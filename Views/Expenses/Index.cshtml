@@ -1,0 +1,52 @@
+@model IEnumerable<SharedHousingApp.Models.Expense>
+
+@{
+    ViewData["Title"] = "All Expenses";
+}
+
+<h2>Shared Expense Ledger</h2>
+
+@if (!Model.Any())
+{
+    <p>No expenses have been added yet.</p>
+}
+else
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Paid By</th>
+                <th>Amount</th>
+                <th>Shared With</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var expense in Model)
+        {
+            <tr>
+                <td>@expense.Date.ToShortDateString()</td>
+                <td>@expense.Title</td>
+                <td>@expense.PaidByUser?.Name</td>
+                <td>€@expense.Amount.ToString("0.00")</td>
+                <td>
+                    @if (expense.SharedWithUsers.Any())
+                    {
+                        <ul class="mb-0">
+                        @foreach (var user in expense.SharedWithUsers)
+                        {
+                            <li>@user.Name</li>
+                        }
+                        </ul>
+                    }
+                    else
+                    {
+                        <em>No one selected</em>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

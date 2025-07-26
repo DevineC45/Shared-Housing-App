@@ -1,0 +1,16 @@
+@model SharedHousingApp.Models.Expense
+
+<h2>Confirm Settle</h2>
+
+<p>Are you sure you want to mark this expense as settled?</p>
+
+<ul>
+    <li><strong>Title:</strong> @Model.Title</li>
+    <li><strong>Amount:</strong> £@Model.Amount.ToString("0.00")</li>
+</ul>
+
+<form asp-action="Settle" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">Yes, Mark as Settled</button>
+    <a class="btn btn-secondary" asp-action="MyExpenses">Cancel</a>
+</form>

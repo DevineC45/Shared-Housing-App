@@ -1,0 +1,71 @@
+@model IEnumerable<SharedHousingApp.Models.Expense>
+
+@{
+    ViewData["Title"] = "My Expenses";
+    var currentUserId = Context.Session.GetString("UserId");
+}
+
+<h2>My Expenses</h2>
+
+<a class="btn btn-outline-primary mb-3" asp-action="SettledExpenses">View Settled Expenses</a>
+
+@if (!Model.Any())
+{
+    <p>You haven’t paid for anything yet. 🪙</p>
+}
+else
+{
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Shared With</th>
+                <th>Each Person Owes</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var expense in Model)
+        {
+            var peopleCount = expense.SharedWithUsers.Count + 1; // Include the user who paid
+            var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
+
+            <tr>
+                <td>@expense.Date.ToShortDateString()</td>
+                <td>@expense.Title</td>
+                <td>@("£" + expense.Amount.ToString("0.00"))</td>
+                <td>
+                    @if (expense.SharedWithUsers.Any())
+                    {
+                        <ul class="mb-0">
+                        @foreach (var user in expense.SharedWithUsers)
+                        {
+                            <li>@user.Name</li>
+                        }
+                        </ul>
+                    }
+                    else
+                    {
+                        <em>No one selected</em>
+                    }
+                </td>
+                <td>
+                    @("£" + splitAmount.ToString("0.00"))
+                </td>
+                <td>
+                    @if (expense.PaidByUserId.ToString() == currentUserId && !expense.IsSettled)
+                    {
+                        <a asp-action="Settle" asp-route-id="@expense.Id" class="btn btn-sm btn-outline-success">Mark as Settled</a>
+                    }
+                    else if (expense.IsSettled)
+                    {
+                        <span class="badge bg-success">Settled</span>
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

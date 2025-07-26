@@ -1,0 +1,48 @@
+@model IEnumerable<SharedHousingApp.Models.Expense>
+
+@{
+    ViewData["Title"] = "Settled Expenses";
+}
+
+<h2>Settled Expenses</h2>
+
+@if (!Model.Any())
+{
+    <p>You haven’t settled any expenses yet.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Amount</th>
+                <th>Shared With</th>
+                <th>Each Person Owed</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var expense in Model)
+        {
+            var peopleCount = expense.SharedWithUsers.Count + 1;
+            var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
+
+            <tr>
+                <td>@expense.Date.ToShortDateString()</td>
+                <td>@expense.Title</td>
+                <td>@("£" + expense.Amount.ToString("0.00"))</td>
+                <td>
+                    <ul class="mb-0">
+                        @foreach (var user in expense.SharedWithUsers)
+                        {
+                            <li>@user.Name</li>
+                        }
+                    </ul>
+                </td>
+                <td>@("£" + splitAmount.ToString("0.00"))</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
