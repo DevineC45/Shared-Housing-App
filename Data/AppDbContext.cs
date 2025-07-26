@@ -13,6 +13,8 @@ namespace SharedHousingApp.Data
 
         public DbSet<Expense> Expenses { get; set; } // ✅ New DbSet for Expenses
 
+        public DbSet<Announcement> Announcements { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

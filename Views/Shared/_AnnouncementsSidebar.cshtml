@@ -1,0 +1,29 @@
+@inject SharedHousingApp.Data.AppDbContext _context
+
+@{
+    var announcements = _context.Announcements
+        .OrderByDescending(a => a.PostedAt)
+        .Take(5)
+        .ToList();
+}
+
+<h5 class="border-bottom pb-2 mb-3">📢 Announcements</h5>
+
+@if (!announcements.Any())
+{
+    <p class="text-muted">No announcements yet.</p>
+}
+else
+{
+    <ul class="list-unstyled small">
+        @foreach (var a in announcements)
+        {
+            <li class="mb-3">
+                <strong>@a.Title</strong><br />
+                <small class="text-muted">@a.PostedAt.ToString("MMM dd")</small>
+                <p class="mb-0">@a.Content.Substring(0, Math.Min(a.Content.Length, 60))…</p>
+            </li>
+        }
+    </ul>
+    <a asp-controller="Announcements" asp-action="Index" class="btn btn-sm btn-outline-secondary">View All</a>
+}

@@ -62,11 +62,24 @@
         </nav>
     </header>
 
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+        <div class="container-fluid">
+        <div class="row">
+            <!-- Main content area -->
+            <div class="col-md-9">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+
+            <!-- Sidebar for logged-in users -->
+            @if (userId != null)
+            {
+                <aside class="col-md-3 bg-light border-start pt-3" style="max-height: 100vh; overflow-y: auto;">
+                    <partial name="_AnnouncementsSidebar" />
+                </aside>
+            }
+            </div>
+        </div>
 
     <footer class="border-top footer text-muted">
         <div class="container">

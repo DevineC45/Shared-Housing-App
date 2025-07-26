@@ -1,0 +1,25 @@
+@model List<SharedHousingApp.Models.Announcement>
+
+@{
+    ViewData["Title"] = "Announcements";
+}
+
+<h2 class="mb-4">📢 Announcements</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">No announcements yet.</div>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var announcement in Model)
+        {
+            <div class="list-group-item mb-3 shadow-sm">
+                <h5 class="mb-1">@announcement.Title</h5>
+                <small class="text-muted">Posted on @announcement.PostedAt.ToString("MMM dd, yyyy @ HH:mm")</small>
+                <p class="mt-2">@announcement.Content</p>
+            </div>
+        }
+    </div>
+}
