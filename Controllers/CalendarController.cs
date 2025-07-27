@@ -44,7 +44,6 @@ namespace SharedHousingApp.Controllers
 
             if (!ModelState.IsValid)
             {
-                // 🔍 DEBUG: Show why validation failed
                 foreach (var entry in ModelState)
                 {
                     foreach (var error in entry.Value.Errors)
@@ -73,18 +72,82 @@ namespace SharedHousingApp.Controllers
             return RedirectToAction("Index");
         }
 
-
+        // ✅ GET: /Calendar/GetEvents
         [HttpGet]
         public JsonResult GetEvents()
         {
             var events = _context.CalendarEvents
                 .Select(e => new
                 {
+                    id = e.Id,
                     title = $"{(e.EventType == "Landlord" ? "🛠️" : "🎉")} {e.Title} - {e.CreatedByName}",
                     start = e.Date.ToString("yyyy-MM-dd"),
-                }).ToList();
+                    description = e.Description,
+                    createdBy = e.CreatedByName
+                })
+                .ToList();
 
             return Json(events);
+        }
+
+        // GET: /Calendar/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var calendarEvent = _context.CalendarEvents.Find(id);
+            var userName = HttpContext.Session.GetString("UserName");
+
+            if (calendarEvent == null || calendarEvent.CreatedByName != userName)
+                return Unauthorized();
+
+            return View(calendarEvent);
+        }
+
+        // POST: /Calendar/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(CalendarEvent calendarEvent)
+        {
+            var userName = HttpContext.Session.GetString("UserName");
+
+            if (calendarEvent.CreatedByName != userName)
+                return Unauthorized();
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(calendarEvent);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(calendarEvent);
+        }
+
+        // GET: /Calendar/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var calendarEvent = _context.CalendarEvents.Find(id);
+            var userName = HttpContext.Session.GetString("UserName");
+
+            if (calendarEvent == null || calendarEvent.CreatedByName != userName)
+                return Unauthorized();
+
+            return View(calendarEvent);
+        }
+
+        // POST: /Calendar/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var calendarEvent = _context.CalendarEvents.Find(id);
+            var userName = HttpContext.Session.GetString("UserName");
+
+            if (calendarEvent == null || calendarEvent.CreatedByName != userName)
+                return Unauthorized();
+
+            _context.CalendarEvents.Remove(calendarEvent);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
