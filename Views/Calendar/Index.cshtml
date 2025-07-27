@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Shared Calendar";
+}
+
+<h2 class="mb-4">📅 Shared Calendar</h2>
+
+<div class="mb-3">
+    <a class="btn btn-primary" asp-action="Create" asp-controller="Calendar">
+        ➕ Create Event
+    </a>
+</div>
+
+<div id="calendar"></div>
+
+@section Scripts {
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                height: 'auto',
+                events: '/Calendar/GetEvents',
+                dateClick: function (info) {
+                    window.location.href = '/Calendar/Create';
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+}

@@ -47,6 +47,7 @@ namespace SharedHousingApp.Controllers
             {
                 HttpContext.Session.SetString("UserId", user.Id.ToString());
                 HttpContext.Session.SetString("UserRole", user.Role);
+                HttpContext.Session.SetString("UserName", user.Name); // ✅ ADD THIS
                 return RedirectToAction("Index", "Home");
             }
 

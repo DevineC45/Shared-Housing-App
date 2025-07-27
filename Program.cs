@@ -10,8 +10,14 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add session support
-builder.Services.AddSession();
+// ✅ Proper session setup
+builder.Services.AddDistributedMemoryCache(); // Required for session to work
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // adjust as needed
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true; // ✅ crucial for session in ASP.NET Core
+});
 
 var app = builder.Build();
 
@@ -27,7 +33,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// Enable session before authorization
+// ✅ Enable session before anything that might use it
 app.UseSession();
 
 app.UseAuthorization();
