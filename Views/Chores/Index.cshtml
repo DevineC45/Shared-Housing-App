@@ -1,37 +1,59 @@
 @model IEnumerable<SharedHousingApp.Models.Chore>
-    
 
 @{
-    ViewData["Title"] = "Chore List";
+    ViewData["Title"] = "Chores Hub";
 }
 
-<h2>Chores</h2>
+<h2 class="text-center mb-4">🧹 Chores Hub</h2>
 
-<a class="btn btn-success mb-3" asp-action="Create">Add New Chore</a>
+<div class="d-flex justify-content-center mb-4 gap-3 flex-wrap">
+    <a class="btn btn-success btn-lg" asp-action="Create">Add New Chore</a>
+    <a class="btn btn-primary btn-lg" asp-action="MyChores">View My Chores</a>
+</div>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Assigned To</th>
-            <th>Complete</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var chore in Model)
+<!-- ✅ Success alert goes here -->
+@if (TempData["Message"] != null)
 {
-    <tr>
-        <td>@chore.Title</td>
-        <td>@chore.AssignedToUser?.Name</td>
-        <td>@chore.IsComplete</td>
-        <td>
-            <form asp-action="Complete" method="post">
-                <input type="hidden" name="id" value="@chore.Id" />
-                <button class="btn btn-sm btn-primary">Complete</button>
-            </form>
-        </td>
-    </tr>
+    <div class="alert alert-success chore-alert text-center mb-3">
+        @TempData["Message"]
+    </div>
 }
-    </tbody>
-</table>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        @if (!Model.Any())
+        {
+            <p class="text-center text-muted mb-0">No chores assigned yet.</p>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Title</th>
+                            <th>Currently Assigned To</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chore in Model)
+                        {
+                            <tr>
+                                <td>@chore.Title</td>
+                                <td>@chore.AssignedToUser?.Name</td>
+                                <td>
+                                    <form asp-action="Complete" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@chore.Id" />
+                                        <button class="btn btn-sm btn-success">Done & Rotate</button>
+                                    </form>
+                                    <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@chore.Id">Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>

@@ -24,7 +24,7 @@ namespace SharedHousingApp.Controllers
             }
 
             var chores = _context.Chores
-                .Include(c => c.AssignedToUser) // 👈 this is what gives access to names
+                .Include(c => c.AssignedToUser)
                 .ToList();
 
             return View(chores);
@@ -58,6 +58,7 @@ namespace SharedHousingApp.Controllers
             {
                 return RedirectToAction("Login", "Users");
             }
+
             var chores = _context.Chores
                 .Include(c => c.AssignedToUser)
                 .ToList();
@@ -88,7 +89,6 @@ namespace SharedHousingApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Automatically assign to the first tenant
                 var firstTenant = _context.Users
                     .Where(u => u.Role == "Tenant")
                     .OrderBy(u => u.Id)
@@ -106,6 +106,46 @@ namespace SharedHousingApp.Controllers
                 _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
+
+            return View(chore);
+        }
+
+        // GET: Chores/Edit/5
+        public IActionResult Edit(int id)
+        {
+            var role = HttpContext.Session.GetString("UserRole");
+            if (role != "Tenant")
+            {
+                return RedirectToAction("Login", "Users");
+            }
+
+            var chore = _context.Chores.FirstOrDefault(c => c.Id == id);
+            if (chore == null) return NotFound();
+
+            ViewBag.Tenants = _context.Users
+                .Where(u => u.Role == "Tenant")
+                .ToList();
+
+            return View(chore);
+        }
+
+        // POST: Chores/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Chore chore)
+        {
+            if (id != chore.Id) return BadRequest();
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(chore);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewBag.Tenants = _context.Users
+                .Where(u => u.Role == "Tenant")
+                .ToList();
 
             return View(chore);
         }
@@ -128,17 +168,13 @@ namespace SharedHousingApp.Controllers
             var nextTenant = tenants[nextIndex];
 
             chore.AssignedToUserId = nextTenant.Id;
-
-            if (chore.RepeatWeekly)
-            {
-                chore.IsComplete = false;
-            }
-            else
-            {
-                chore.IsComplete = true;
-            }
+            chore.IsComplete = !chore.RepeatWeekly;
 
             _context.SaveChanges();
+
+            // ✅ Success message for user feedback
+            TempData["Message"] = $"Chore '{chore.Title}' is now assigned to {nextTenant.Name}!";
+
             return RedirectToAction(nameof(Index));
         }
     }

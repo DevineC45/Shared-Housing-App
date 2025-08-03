@@ -36,3 +36,38 @@ body {
   margin: 0 auto;
   padding: 20px 0;
 }
+
+/* --- Custom Dashboard Button Styling --- */
+.btn-lg {
+  border-radius: 1rem; /* More rounded buttons */
+  box-shadow: 0 4px 8
+}
+
+/* --- Dashboard Table and Card Styling --- */
+.card {
+    border-radius: 1rem;
+}
+
+.table {
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #f8f9fa; /* Light grey for header */
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f3f5; /* Slight hover effect */
+}
+
+/* --- Chore Alert Animation --- */
+.chore-alert {
+    animation: fadeHighlight 2s ease-out;
+}
+
+@keyframes fadeHighlight {
+    0%   { background-color: #d1e7dd; }
+    50%  { background-color: #bcd0c7; }
+    100% { background-color: #d1e7dd; }
+}

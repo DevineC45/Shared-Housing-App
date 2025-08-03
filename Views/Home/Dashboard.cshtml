@@ -3,34 +3,34 @@
     var role = ViewData["Role"]?.ToString();
 }
 
-<h2>Welcome to your dashboard</h2>
+<h2 class="text-center mb-4">Welcome to your dashboard</h2>
 
 @if (role == "Landlord")
 {
-    <p>You are a landlord. You can post announcements and manage the calendar.</p>
+    <p class="text-center mb-4">You are a landlord. You can post announcements and manage the calendar.</p>
 
-    <div class="mt-3">
-        <a class="btn btn-primary me-2" asp-controller="Announcements" asp-action="Create">
+    <div class="d-flex justify-content-center gap-3 flex-wrap">
+        <a class="btn btn-primary btn-lg px-5 py-3" asp-controller="Announcements" asp-action="Create">
             📢 Post New Announcement
         </a>
-        <a class="btn btn-outline-primary" asp-controller="Calendar" asp-action="Index">
+        <a class="btn btn-outline-primary btn-lg px-5 py-3" asp-controller="Calendar" asp-action="Index">
             📅 Manage Calendar
         </a>
     </div>
 }
 else
 {
-    <p>You are a tenant. You can view chores and expenses here.</p>
+    <p class="text-center mb-4">You are a tenant. You can manage your chores and expenses here.</p>
 
-    <div class="mt-3">
-        <a class="btn btn-primary me-2" asp-controller="Chores" asp-action="MyChores">View My Chores</a>
-        <a class="btn btn-outline-secondary me-2" asp-controller="Chores" asp-action="Schedule">View Chore Schedule</a>
-        <a class="btn btn-success me-2" asp-controller="Chores" asp-action="Create">Add New Chore</a>
-    </div>
-
-    <div class="mt-3">
-        <a class="btn btn-info me-2" asp-controller="Expenses" asp-action="MyExpenses">View My Expenses</a>
-        <a class="btn btn-outline-dark me-2" asp-controller="Expenses" asp-action="Index">All Expenses</a>
-        <a class="btn btn-success" asp-controller="Expenses" asp-action="Create">Add New Expense</a>
+    <div class="d-flex justify-content-center mb-4 gap-3 flex-wrap">
+        <a class="btn btn-primary btn-lg" asp-controller="Chores" asp-action="Index">
+            🧹 Chores
+        </a>
+        <a class="btn btn-info btn-lg" asp-controller="Expenses" asp-action="Index">
+            💰 Expenses
+        </a>
+        <a class="btn btn-outline-secondary btn-lg" asp-controller="Calendar" asp-action="Index">
+            📅 Calendar
+        </a>
     </div>
 }

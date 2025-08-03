@@ -27,7 +27,6 @@ public class HomeController : Controller
     public IActionResult Dashboard()
     {
         var role = HttpContext.Session.GetString("UserRole");
-
         ViewData["Role"] = role;
         return View();
     }
