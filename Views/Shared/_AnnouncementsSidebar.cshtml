@@ -18,12 +18,42 @@ else
     <ul class="list-unstyled small">
         @foreach (var a in announcements)
         {
+            var truncated = a.Content.Length > 60 ? a.Content.Substring(0, 60) + "…" : a.Content;
+            var collapseId = $"collapse-{a.Id}";
             <li class="mb-3">
-                <strong>@a.Title</strong><br />
+                <!-- Title links to Index (full list) -->
+                <a asp-controller="Announcements" asp-action="Index" class="fw-bold text-decoration-none">
+                    @a.Title
+                </a><br />
                 <small class="text-muted">@a.PostedAt.ToString("MMM dd")</small>
-                <p class="mb-0">@a.Content.Substring(0, Math.Min(a.Content.Length, 60))…</p>
+
+                @if (a.Content.Length <= 60)
+                {
+                    <p class="mb-0">@a.Content</p>
+                }
+                else
+                {
+                    <!-- Truncated content (visible until expanded) -->
+                    <p class="mb-0 collapse show" id="truncated-@a.Id" data-bs-parent="">
+                        @truncated
+                        <a class="text-decoration-none small" data-bs-toggle="collapse" href="#@collapseId" role="button" aria-expanded="false" aria-controls="@collapseId"
+                           onclick="document.getElementById('truncated-@a.Id').classList.remove('show')">
+                            Show More
+                        </a>
+                    </p>
+
+                    <!-- Full content (hidden until expanded) -->
+                    <div class="collapse mt-1" id="@collapseId">
+                        <p class="mb-1">@a.Content</p>
+                        <a class="text-decoration-none small" data-bs-toggle="collapse" href="#@collapseId" role="button" aria-expanded="true" aria-controls="@collapseId"
+                           onclick="document.getElementById('truncated-@a.Id').classList.add('show')">
+                            Show Less
+                        </a>
+                    </div>
+                }
             </li>
         }
     </ul>
+
     <a asp-controller="Announcements" asp-action="Index" class="btn btn-sm btn-outline-secondary">View All</a>
 }

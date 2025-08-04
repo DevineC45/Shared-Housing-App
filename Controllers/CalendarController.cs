@@ -24,15 +24,23 @@ namespace SharedHousingApp.Controllers
             return View(events);
         }
 
-        // GET: /Calendar/Create
-        public IActionResult Create()
+        // GET: /Calendar/Create?date=2025-08-12
+        public IActionResult Create(DateTime? date)
         {
             if (HttpContext.Session.GetString("UserId") == null)
             {
                 return RedirectToAction("Login", "Users");
             }
 
-            return View();
+            var model = new CalendarEvent();
+
+            // ✅ Pre-fill the date if provided
+            if (date.HasValue)
+            {
+                model.Date = date.Value.Date;
+            }
+
+            return View(model);
         }
 
         // POST: /Calendar/Create

@@ -17,22 +17,19 @@ namespace SharedHousingApp.Controllers
         // GET: /Announcements
         public IActionResult Index()
         {
-            // Announcements ordered by newest first
             var announcements = _context.Announcements
                 .OrderByDescending(a => a.PostedAt)
                 .ToList();
 
+            ViewData["UserRole"] = HttpContext.Session.GetString("UserRole");
             return View(announcements);
         }
 
         // GET: /Announcements/Create
         public IActionResult Create()
         {
-            // Only allow access if user is logged in as landlord
             if (HttpContext.Session.GetString("UserRole") != "Landlord")
-            {
                 return RedirectToAction("Dashboard", "Home");
-            }
 
             return View();
         }
@@ -43,9 +40,7 @@ namespace SharedHousingApp.Controllers
         public IActionResult Create(Announcement announcement)
         {
             if (HttpContext.Session.GetString("UserRole") != "Landlord")
-            {
                 return RedirectToAction("Dashboard", "Home");
-            }
 
             if (ModelState.IsValid)
             {
@@ -56,6 +51,66 @@ namespace SharedHousingApp.Controllers
             }
 
             return View(announcement);
+        }
+
+        // GET: /Announcements/Edit/5
+        public IActionResult Edit(int id)
+        {
+            if (HttpContext.Session.GetString("UserRole") != "Landlord")
+                return RedirectToAction("Dashboard", "Home");
+
+            var announcement = _context.Announcements.FirstOrDefault(a => a.Id == id);
+            if (announcement == null) return NotFound();
+
+            return View(announcement);
+        }
+
+        // POST: /Announcements/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(int id, Announcement announcement)
+        {
+            if (id != announcement.Id) return BadRequest();
+            if (HttpContext.Session.GetString("UserRole") != "Landlord")
+                return RedirectToAction("Dashboard", "Home");
+
+            if (ModelState.IsValid)
+            {
+                _context.Update(announcement);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(announcement);
+        }
+
+        // GET: /Announcements/Delete/5
+        public IActionResult Delete(int id)
+        {
+            if (HttpContext.Session.GetString("UserRole") != "Landlord")
+                return RedirectToAction("Dashboard", "Home");
+
+            var announcement = _context.Announcements.FirstOrDefault(a => a.Id == id);
+            if (announcement == null) return NotFound();
+
+            return View(announcement);
+        }
+
+        // POST: /Announcements/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            if (HttpContext.Session.GetString("UserRole") != "Landlord")
+                return RedirectToAction("Dashboard", "Home");
+
+            var announcement = _context.Announcements.Find(id);
+            if (announcement == null) return NotFound();
+
+            _context.Announcements.Remove(announcement);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }

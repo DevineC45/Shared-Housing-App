@@ -16,7 +16,7 @@
 
 <div id="calendar"></div>
 
-<!-- Edit Modal -->
+<!-- ✅ Edit Modal -->
 <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -50,7 +50,7 @@
     </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
+<!-- ✅ Delete Modal -->
 <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteEventModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -74,99 +74,67 @@
 </div>
 
 @section Scripts {
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const calendarEl = document.getElementById('calendar');
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const calendarEl = document.getElementById('calendar');
 
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
-                height: 'auto',
-                events: '/Calendar/GetEvents',
-                dateClick: function (info) {
-                    window.location.href = '/Calendar/Create';
-                },
-                eventDidMount: function (info) {
-                    const createdBy = info.event.extendedProps.createdBy;
+        const calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            height: 'auto',
+            events: '/Calendar/GetEvents',
 
-                    if (createdBy === currentUserName) {
-                        const btnGroup = document.createElement('div');
-                        btnGroup.classList.add('mt-2');
+            // ✅ Only trigger Create on actual date click
+            dateClick: function (info) {
+                const clickedDate = info.dateStr;
+                window.location.href = `/Calendar/Create?date=${clickedDate}`;
+            },
 
-                        const editBtn = document.createElement('button');
-                        editBtn.innerText = 'Edit';
-                        editBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'me-2');
-                        editBtn.onclick = function () {
-                            document.getElementById('editEventId').value = info.event.id;
-                            document.getElementById('editTitle').value = info.event.title.split(' - ')[0].replace(/^🛠️ |^🎉 /, '');
-                            document.getElementById('editDate').value = info.event.startStr;
-                            document.getElementById('editDescription').value = info.event.extendedProps.description || '';
-                            new bootstrap.Modal(document.getElementById('editEventModal')).show();
-                        };
+            // ✅ Slightly bigger dates for better UX
+            dayCellDidMount: function (arg) {
+                arg.el.style.fontSize = "16px";  
+                arg.el.style.cursor = "pointer";
+            },
 
-                        const deleteBtn = document.createElement('button');
-                        deleteBtn.innerText = 'Delete';
-                        deleteBtn.classList.add('btn', 'btn-sm', 'btn-outline-danger');
-                        deleteBtn.onclick = function () {
-                            document.getElementById('deleteEventId').value = info.event.id;
-                            new bootstrap.Modal(document.getElementById('deleteEventModal')).show();
-                        };
+            // ✅ Event rendering with edit/delete buttons for event creator
+            eventDidMount: function (info) {
+                const createdBy = info.event.extendedProps.createdBy;
 
-                        btnGroup.appendChild(editBtn);
-                        btnGroup.appendChild(deleteBtn);
-                        info.el.appendChild(btnGroup);
-                    }
+                if (createdBy === currentUserName) {
+                    const btnGroup = document.createElement('div');
+                    btnGroup.classList.add('mt-2');
+
+                    // ✅ Edit button
+                    const editBtn = document.createElement('button');
+                    editBtn.innerText = 'Edit';
+                    editBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'me-2');
+                    editBtn.onclick = function () {
+                        document.getElementById('editEventId').value = info.event.id;
+                        document.getElementById('editTitle').value = info.event.title
+                            .split(' - ')[0]
+                            .replace('🛠️ ', '')
+                            .replace('🎉 ', '');
+                        document.getElementById('editDate').value = info.event.startStr;
+                        document.getElementById('editDescription').value = info.event.extendedProps.description || '';
+                        new bootstrap.Modal(document.getElementById('editEventModal')).show();
+                    };
+
+                    // ✅ Delete button
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.innerText = 'Delete';
+                    deleteBtn.classList.add('btn', 'btn-sm', 'btn-outline-danger');
+                    deleteBtn.onclick = function () {
+                        document.getElementById('deleteEventId').value = info.event.id;
+                        new bootstrap.Modal(document.getElementById('deleteEventModal')).show();
+                    };
+
+                    btnGroup.appendChild(editBtn);
+                    btnGroup.appendChild(deleteBtn);
+                    info.el.appendChild(btnGroup);
                 }
-            });
-
-            calendar.render();
-
-            // 🔄 Submit Edit via AJAX
-            document.getElementById('editEventForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-                const id = document.getElementById('editEventId').value;
-                const title = document.getElementById('editTitle').value;
-                const date = document.getElementById('editDate').value;
-                const description = document.getElementById('editDescription').value;
-
-                fetch(`/Calendar/Edit/${id}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    },
-                    body: JSON.stringify({ id, title, date, description })
-                })
-                .then(response => {
-                    if (response.ok) {
-                        bootstrap.Modal.getInstance(document.getElementById('editEventModal')).hide();
-                        calendar.refetchEvents();
-                    } else {
-                        alert('Error updating event.');
-                    }
-                });
-            });
-
-            // 🗑 Submit Delete via AJAX
-            document.getElementById('deleteEventForm').addEventListener('submit', function (e) {
-                e.preventDefault();
-                const id = document.getElementById('deleteEventId').value;
-
-                fetch(`/Calendar/Delete/${id}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'RequestVerificationToken': document.querySelector('input[name="__RequestVerificationToken"]').value
-                    }
-                })
-                .then(response => {
-                    if (response.ok) {
-                        bootstrap.Modal.getInstance(document.getElementById('deleteEventModal')).hide();
-                        calendar.refetchEvents();
-                    } else {
-                        alert('Error deleting event.');
-                    }
-                });
-            });
+            }
         });
-    </script>
+
+        calendar.render();
+    });
+</script>
 }
