@@ -88,10 +88,11 @@ namespace SharedHousingApp.Controllers
                 .Select(e => new
                 {
                     id = e.Id,
-                    title = $"{(e.EventType == "Landlord" ? "🛠️" : "🎉")} {e.Title} - {e.CreatedByName}",
+                    // ✅ Only title + emoji, no "- Name"
+                    title = e.Title,
                     start = e.Date.ToString("yyyy-MM-dd"),
                     description = e.Description,
-                    createdBy = e.CreatedByName
+                    createdBy = e.CreatedByName // sent for modal
                 })
                 .ToList();
 

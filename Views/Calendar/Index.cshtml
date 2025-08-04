@@ -16,7 +16,27 @@
 
 <div id="calendar"></div>
 
-<!-- ✅ Edit Modal -->
+<!-- View Event Modal -->
+<div class="modal fade" id="viewEventModal" tabindex="-1" aria-labelledby="viewEventModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="viewEventTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p><strong>Date:</strong> <span id="viewEventDate"></span></p>
+                <p><strong>Added By:</strong> <span id="viewEventCreator"></span></p>
+                <p id="viewEventDescription"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal -->
 <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -50,7 +70,7 @@
     </div>
 </div>
 
-<!-- ✅ Delete Modal -->
+<!-- Delete Confirmation Modal -->
 <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteEventModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -83,19 +103,29 @@
             height: 'auto',
             events: '/Calendar/GetEvents',
 
-            // ✅ Only trigger Create on actual date click
+            // ✅ Only trigger Create when clicking a date
             dateClick: function (info) {
                 const clickedDate = info.dateStr;
                 window.location.href = `/Calendar/Create?date=${clickedDate}`;
             },
 
-            // ✅ Slightly bigger dates for better UX
+            // ✅ Slightly bigger dates
             dayCellDidMount: function (arg) {
-                arg.el.style.fontSize = "16px";  
+                arg.el.style.fontSize = "16px";
                 arg.el.style.cursor = "pointer";
             },
 
-            // ✅ Event rendering with edit/delete buttons for event creator
+            // ✅ Show event details in modal when clicked
+            eventClick: function (info) {
+                document.getElementById('viewEventTitle').innerText = info.event.title;
+                document.getElementById('viewEventDate').innerText = info.event.startStr;
+                document.getElementById('viewEventCreator').innerText = info.event.extendedProps.createdBy;
+                document.getElementById('viewEventDescription').innerText = info.event.extendedProps.description || 'No description.';
+
+                new bootstrap.Modal(document.getElementById('viewEventModal')).show();
+            },
+
+            // ✅ Event rendering with edit/delete for creator
             eventDidMount: function (info) {
                 const createdBy = info.event.extendedProps.createdBy;
 
@@ -103,22 +133,17 @@
                     const btnGroup = document.createElement('div');
                     btnGroup.classList.add('mt-2');
 
-                    // ✅ Edit button
                     const editBtn = document.createElement('button');
                     editBtn.innerText = 'Edit';
                     editBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'me-2');
                     editBtn.onclick = function () {
                         document.getElementById('editEventId').value = info.event.id;
-                        document.getElementById('editTitle').value = info.event.title
-                            .split(' - ')[0]
-                            .replace('🛠️ ', '')
-                            .replace('🎉 ', '');
+                        document.getElementById('editTitle').value = info.event.title;
                         document.getElementById('editDate').value = info.event.startStr;
                         document.getElementById('editDescription').value = info.event.extendedProps.description || '';
                         new bootstrap.Modal(document.getElementById('editEventModal')).show();
                     };
 
-                    // ✅ Delete button
                     const deleteBtn = document.createElement('button');
                     deleteBtn.innerText = 'Delete';
                     deleteBtn.classList.add('btn', 'btn-sm', 'btn-outline-danger');
