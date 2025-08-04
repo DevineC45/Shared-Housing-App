@@ -157,7 +157,6 @@ namespace SharedHousingApp.Controllers
             var chore = _context.Chores.FirstOrDefault(c => c.Id == id);
             if (chore == null) return NotFound();
 
-            // Find all tenants
             var tenants = _context.Users
                 .Where(u => u.Role == "Tenant")
                 .OrderBy(u => u.Id)
@@ -172,8 +171,33 @@ namespace SharedHousingApp.Controllers
 
             _context.SaveChanges();
 
-            // ✅ Success message for user feedback
             TempData["Message"] = $"Chore '{chore.Title}' is now assigned to {nextTenant.Name}!";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET: Chores/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var chore = _context.Chores
+                .Include(c => c.AssignedToUser)
+                .FirstOrDefault(c => c.Id == id);
+
+            if (chore == null) return NotFound();
+
+            return View(chore); // Razor confirmation page
+        }
+
+        // POST: Chores/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var chore = _context.Chores.Find(id);
+            if (chore == null) return NotFound();
+
+            _context.Chores.Remove(chore);
+            _context.SaveChanges();
 
             return RedirectToAction(nameof(Index));
         }

@@ -75,7 +75,7 @@ namespace SharedHousingApp.Controllers
             int id = int.Parse(userId);
 
             var tenants = _context.Users
-                .Where(u => u.Role == "Tenant" && u.Id != id) // exclude current user
+                .Where(u => u.Role == "Tenant" && u.Id != id)
                 .OrderBy(u => u.Name)
                 .ToList();
 
@@ -140,6 +140,33 @@ namespace SharedHousingApp.Controllers
             _context.SaveChanges();
 
             return RedirectToAction(nameof(MyExpenses));
+        }
+
+        // GET: Expenses/Delete/5
+        public IActionResult Delete(int id)
+        {
+            var expense = _context.Expenses
+                .Include(e => e.PaidByUser)
+                .Include(e => e.SharedWithUsers)
+                .FirstOrDefault(e => e.Id == id);
+
+            if (expense == null) return NotFound();
+
+            return View(expense); // Confirmation view
+        }
+
+        // POST: Expenses/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var expense = _context.Expenses.Find(id);
+            if (expense == null) return NotFound();
+
+            _context.Expenses.Remove(expense);
+            _context.SaveChanges();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }
