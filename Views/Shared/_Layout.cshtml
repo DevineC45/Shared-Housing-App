@@ -105,22 +105,9 @@
         </nav>
     </header>
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-9">
-                <main role="main" class="pb-3">
-                    @RenderBody()
-                </main>
-            </div>
-
-            @if (userId != null)
-            {
-                <aside class="col-md-3 bg-secondary border-start pt-3 text-dark" style="max-height: 100vh; overflow-y: auto;">
-                    <partial name="_AnnouncementsSidebar" />
-                </aside>
-            }
-        </div>
-    </div>
+    <main class="page-container">
+    @RenderBody()
+    </main>
 
     <footer class="border-top footer text-muted mt-4 bg-dark text-center text-light py-3">
         <div class="container">

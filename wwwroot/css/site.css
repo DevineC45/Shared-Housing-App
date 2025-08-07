@@ -1,5 +1,8 @@
+/* --------- Base Font Sizing --------- */
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,66 +11,162 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* --------- Light Theme & Gradient Background --------- */
 body {
   margin-bottom: 60px;
+  background: linear-gradient(135deg, #4facfe 0%, #8e44ad 100%);
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
+/* --------- Global Link Styling --------- */
+a {
+  color: #4facfe;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: #8e44ad;
+}
+
+/* --------- Focus Styling --------- */
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem #8e44ad, 0 0 0 0.25rem #4facfe;
+}
+
+/* --------- Main Layout Centering --------- */
+main {
+  max-width: 850px;
+  margin: 10rem auto 2rem auto; /* Adds top and bottom margin */
+  padding: 2rem 1rem;
+  background-color: #fff;
+  border-radius: 4rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+/* --------- Headings --------- */
+h1, h2, h3, h4 {
+  text-align: center;
+  color: #222;
+  margin-bottom: 2rem;
+}
+
+/* --------- Form Styling --------- */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #444;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form input[type="date"],
+form input[type="number"],
+form textarea,
+form select {
+  width: 100%;
+  max-width: 500px;
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fdfdfd;
+  color: #333;
+}
+
+/* --------- Form Floating Placeholder --------- */
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+  color: #999;
   text-align: end;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
 
-/* --- Custom Calendar Styling --- */
+/* --------- Button Styling --------- */
+.btn-lg {
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.btn {
+  padding: 0.6rem 1.2rem;
+  font-weight: bold;
+  background: linear-gradient(to right, #4facfe, #8e44ad);
+  border: none;
+  color: white;
+  transition: background 0.3s ease-in-out;
+}
+
+.btn:hover {
+  background: linear-gradient(to right, #8e44ad, #4facfe);
+  color: white;
+}
+
+/* --------- Calendar Styling --------- */
 #calendar {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px 0;
 }
 
-/* --- Custom Dashboard Button Styling --- */
-.btn-lg {
-  border-radius: 1rem; /* More rounded buttons */
-  box-shadow: 0 4px 8
-}
-
-/* --- Dashboard Table and Card Styling --- */
+/* --------- Dashboard Card & Table Styling --------- */
 .card {
-    border-radius: 1rem;
+  border-radius: 1rem;
+  background-color: #fff;
+  color: #333;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 .table {
-    border-radius: 0.75rem;
-    overflow: hidden;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background-color: #fff;
+  color: #333;
 }
 
 .table thead th {
-    background-color: #f8f9fa; /* Light grey for header */
+  background-color: #f2f2f2;
+  color: #222;
 }
 
 .table-hover tbody tr:hover {
-    background-color: #f1f3f5; /* Slight hover effect */
+  background-color: #f9f9f9;
 }
 
-/* --- Chore Alert Animation --- */
+/* --------- Chore Alert Animation --------- */
 .chore-alert {
-    animation: fadeHighlight 2s ease-out;
+  animation: fadeHighlight 2s ease-out;
 }
 
 @keyframes fadeHighlight {
-    0%   { background-color: #d1e7dd; }
-    50%  { background-color: #bcd0c7; }
-    100% { background-color: #d1e7dd; }
+  0%   { background-color: #dff0ff; }
+  50%  { background-color: #e8e0ff; }
+  100% { background-color: #dff0ff; }
 }
+
+.login-container {
+  max-width: 500px;
+  margin: 6rem auto;
+  padding: 2rem 2rem;
+  background-color: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+

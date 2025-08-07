@@ -5,18 +5,18 @@
     var role = ViewData["UserRole"]?.ToString();
 }
 
-<h2 class="mb-4">📢 Announcements</h2>
+<h2 class="text-center mb-4">📢 Announcements</h2>
 
 @if (!Model.Any())
 {
-    <div class="alert alert-info">No announcements yet.</div>
+    <div class="alert alert-info text-center">No announcements yet.</div>
 }
 else
 {
     <div class="list-group">
         @foreach (var announcement in Model)
         {
-            <div class="list-group-item mb-3 shadow-sm">
+            <div class="list-group-item bg-dark text-light border rounded mb-3 shadow-sm">
                 <h5 class="mb-1">@announcement.Title</h5>
                 <small class="text-muted">Posted on @announcement.PostedAt.ToString("MMM dd, yyyy @ HH:mm")</small>
                 <p class="mt-2">@announcement.Content</p>
@@ -44,15 +44,15 @@ else
 <!-- Reusable Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
+        <div class="modal-content bg-dark text-light">
+            <div class="modal-header border-bottom">
                 <h5 class="modal-title">Confirm Delete</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 Are you sure you want to delete <strong id="deleteItemName"></strong>?
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer border-top">
                 <form id="deleteForm" method="post">
                     <input type="hidden" name="id" id="deleteItemId" />
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
