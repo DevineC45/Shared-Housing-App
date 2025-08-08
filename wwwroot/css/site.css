@@ -169,4 +169,74 @@ form select {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+/* Remove white card effect for landing page */
+.landing-page {
+    margin: 4rem auto 10rem;   /* ↓ less space at top, more above footer */
+    background-color: transparent;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+/* Round the grey box on landing page */
+.landing-page .container-fluid.bg-light {
+    border-radius: 2rem;
+}
+
+/* Optional: make the grey box slightly translucent */
+.landing-page .container-fluid.bg-light {
+    background-color: rgba(248, 249, 250, 0.95); /* Bootstrap bg-light with opacity */
+}
+
+.landing-hero {
+    max-width: 800x; /* keep it narrower */
+    margin: 0 auto;
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+}
+
+.landing-image {
+    max-width: 100%;
+    height: auto;
+    width: 800px; /* makes it bigger on desktop */
+}
+
+.landing-btn {
+    font-size: 1.3rem;   /* bigger text */
+    padding: 0.8rem 2rem; /* bigger clickable area */
+    border-radius: 2rem;
+}
+
+.features-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap; /* stacks on small screens */
+}
+
+.feature {
+    flex: 1 1 200px;
+    max-width: 250px;
+    background: rgba(255, 255, 255, 0.85);
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.feature h5 {
+  font-family: 'Tahoma';
+    font-weight: 700;
+    color: rgb(0, 140, 255);
+    margin-bottom: 0.5rem;
+}
+
+.feature p {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 0;
+}
+
+
+
 

@@ -1,22 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Welcome";
+    ViewData["BodyClass"] = "landing-page";
 }
 
-<div class="container-fluid bg-light p-5">
-    <div class="row align-items-center">
-        <div class="col-lg-6 text-center text-lg-start">
-            <h1 class="display-4 fw-bold">Welcome to SharedHousingApp</h1>
-            <p class="lead mt-3">
-                Your shared living assistant for managing chores, tracking expenses, <br />
-                and staying in sync with your housemates.
-            </p>
-            <div class="mt-4">
-                <a class="btn btn-primary btn-lg me-3" asp-controller="Users" asp-action="Login">Login</a>
-                <a class="btn btn-outline-secondary btn-lg" asp-controller="Users" asp-action="Register">Register</a>
-            </div>
+<div class="landing-hero bg-light text-center">
+    <h1 class="display-4 fw-bold">Welcome to Homigo</h1>
+
+    <img src="~/img/hmates.png" 
+         class="img-fluid rounded shadow my-4 landing-image" 
+         alt="Landing image" />
+
+    <!-- Feature Highlights Row -->
+    <div class="features-row my-4">
+        <div class="feature">
+            <h5>Chore Management</h5>
+            <p>Keep your home running smoothly with shared task lists.</p>
         </div>
-        <div class="col-lg-6 text-center mt-4 mt-lg-0">
-            <img src="~/img/hmates.png" class="img-fluid rounded shadow" alt="Landing image" />
+        <div class="feature">
+            <h5>Expense Tracking</h5>
+            <p>Split bills and track payments effortlessly.</p>
         </div>
+        <div class="feature">
+            <h5>Shared Calendar</h5>
+            <p>Stay in sync with house events and deadlines.</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a class="btn btn-primary btn-lg mx-2 landing-btn" asp-controller="Users" asp-action="Login">Login</a>
+        <a class="btn btn-primary btn-lg mx-2 landing-btn" asp-controller="Users" asp-action="Register">Register</a>
     </div>
 </div>

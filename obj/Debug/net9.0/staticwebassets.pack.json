@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\img\\hmates.png"
     },
     {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmateswide.png",
+      "PackagePath": "staticwebassets\\img\\hmateswide.png"
+    },
+    {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
