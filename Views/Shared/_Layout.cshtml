@@ -20,7 +20,7 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm py-3">
             <div class="container d-flex justify-content-between align-items-center px-4">
 
-                <!-- Left: Logo + Brand (less pushed to edge) -->
+                <!-- Left: Logo + Brand -->
                 <div class="d-flex align-items-center me-4">
                     <div class="logo-placeholder rounded-circle bg-secondary me-2" style="width: 28px; height: 28px;"></div>
                     <a class="navbar-brand fw-bold text-light" asp-controller="Home" asp-action="Index">Homigo</a>
@@ -29,58 +29,76 @@
                 <!-- Center: Navigation Links -->
                 <div class="collapse navbar-collapse justify-content-center">
                     <ul class="navbar-nav gap-4">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Home" asp-action="Dashboard">Home</a>
-                        </li>
 
-                        @if (userRole == "Tenant")
+                        @* LANDING PAGE NAV *@
+                        @if ((ViewData["BodyClass"]?.ToString() ?? "") == "landing-page")
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="#" id="choresDropdown" role="button" data-bs-toggle="dropdown">
-                                    Chores
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Chores" asp-action="Index">All Chores</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Chores" asp-action="MyChores">My Chores</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Chores" asp-action="Create">Add New Chore</a></li>
-                                </ul>
-                            </li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="#" id="expensesDropdown" role="button" data-bs-toggle="dropdown">
-                                    Expenses
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Index">All Expenses</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Expenses" asp-action="MyExpenses">My Expenses</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Create">Add New Expense</a></li>
-                                </ul>
-                            </li>
-
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Calendar" asp-action="Index">Calendar</a>
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="About">About Us</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Features">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Contact">Contact</a>
                             </li>
                         }
-                        else if (userRole == "Landlord")
+                        else
                         {
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="#" id="announcementsDropdown" role="button" data-bs-toggle="dropdown">
-                                    Announcements
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Index">View Announcements</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Create">Post New Announcement</a></li>
-                                </ul>
+                            @* APP NAV (when not on landing page) *@
+                            <li class="nav-item">
+                                <a class="nav-link text-light" asp-controller="Home" asp-action="Dashboard">Home</a>
                             </li>
 
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Calendar" asp-action="Index">📅 Manage Calendar</a>
-                            </li>
+                            @if (userRole == "Tenant")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-light" href="#" id="choresDropdown" role="button" data-bs-toggle="dropdown">
+                                        Chores
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Chores" asp-action="Index">All Chores</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Chores" asp-action="MyChores">My Chores</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Chores" asp-action="Create">Add New Chore</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-light" href="#" id="expensesDropdown" role="button" data-bs-toggle="dropdown">
+                                        Expenses
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Index">All Expenses</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Expenses" asp-action="MyExpenses">My Expenses</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Create">Add New Expense</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-controller="Calendar" asp-action="Index">Calendar</a>
+                                </li>
+                            }
+                            else if (userRole == "Landlord")
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle text-light" href="#" id="announcementsDropdown" role="button" data-bs-toggle="dropdown">
+                                        Announcements
+                                    </a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Index">View Announcements</a></li>
+                                        <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Create">Post New Announcement</a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-light" asp-controller="Calendar" asp-action="Index">📅 Manage Calendar</a>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
 
-                <!-- Right: Login/Logout (moved inward slightly) -->
+                <!-- Right: Login/Logout -->
                 <ul class="navbar-nav ms-4 d-flex align-items-center gap-3">
                     @if (userId == null)
                     {
@@ -122,19 +140,9 @@
     @await RenderSectionAsync("Scripts", required: false)
 
     <style>
-        .logo-placeholder {
-            background-color: #444;
-        }
-
-        .navbar-nav .nav-link {
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-        }
-
-        .navbar-nav.gap-4 > .nav-item {
-            margin-left: 0.75rem;
-            margin-right: 0.75rem;
-        }
+        .logo-placeholder { background-color: #444; }
+        .navbar-nav .nav-link { padding-left: 0.75rem; padding-right: 0.75rem; }
+        .navbar-nav.gap-4 > .nav-item { margin-left: 0.75rem; margin-right: 0.75rem; }
     </style>
 </body>
 </html>

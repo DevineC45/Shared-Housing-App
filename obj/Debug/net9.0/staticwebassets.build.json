@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "6Kf9V2Rdb6L5bE93v4H2Ux61xoJHHKXkcY/jLA9tXkc=",
+  "Hash": "pBZXZvpVIETcuHLH35G/bjGMxr5au2MwXBwFT3IMBNc=",
   "Source": "SharedHousingApp",
   "BasePath": "_content/SharedHousingApp",
   "Mode": "Default",
@@ -38,12 +38,12 @@
       "OriginalItemSpec": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\lib\\bootstrap\\dist\\js\\bootstrap.min.js.map"
     },
     {
-      "Identity": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-tkid0e0zgs.gz",
+      "Identity": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-502zs8t2rx.gz",
       "SourceId": "SharedHousingApp",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\",
       "BasePath": "_content/SharedHousingApp",
-      "RelativePath": "css/site#[.{fingerprint=tkid0e0zgs}]?.css.gz",
+      "RelativePath": "css/site#[.{fingerprint=502zs8t2rx}]?.css.gz",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Alternative",
@@ -52,8 +52,8 @@
       "RelatedAsset": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\css\\site.css",
       "AssetTraitName": "Content-Encoding",
       "AssetTraitValue": "gzip",
-      "Fingerprint": "sscipzsgb1",
-      "Integrity": "TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4=",
+      "Fingerprint": "fqu18kdaut",
+      "Integrity": "13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\css\\site.css"
@@ -1417,8 +1417,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "tkid0e0zgs",
-      "Integrity": "TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo=",
+      "Fingerprint": "502zs8t2rx",
+      "Integrity": "5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
@@ -2770,13 +2770,13 @@
   ],
   "Endpoints": [
     {
-      "Route": "css/site.css",
-      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-tkid0e0zgs.gz",
+      "Route": "css/site.502zs8t2rx.css",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-502zs8t2rx.gz",
       "Selectors": [
         {
           "Name": "Content-Encoding",
           "Value": "gzip",
-          "Quality": "0.000689655172"
+          "Quality": "0.000565291125"
         }
       ],
       "ResponseHeaders": [
@@ -2786,19 +2786,19 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1449"
+          "Value": "1768"
         },
         {
           "Name": "ETag",
-          "Value": "\"TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4=\""
+          "Value": "\"13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 08 Aug 2025 16:39:54 GMT"
+          "Value": "Fri, 08 Aug 2025 22:06:19 GMT"
         },
         {
           "Name": "Cache-Control",
-          "Value": "no-cache"
+          "Value": "max-age=31536000, immutable"
         },
         {
           "Name": "Content-Encoding",
@@ -2814,18 +2814,26 @@
         },
         {
           "Name": "ETag",
-          "Value": "W/\"TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo=\""
+          "Value": "W/\"5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc=\""
         }
       ],
       "EndpointProperties": [
         {
+          "Name": "fingerprint",
+          "Value": "502zs8t2rx"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
           "Name": "integrity",
-          "Value": "sha256-TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo="
+          "Value": "sha256-5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc="
         }
       ]
     },
     {
-      "Route": "css/site.css",
+      "Route": "css/site.502zs8t2rx.css",
       "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\css\\site.css",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2835,7 +2843,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4453"
+          "Value": "5397"
         },
         {
           "Name": "Content-Type",
@@ -2843,121 +2851,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo=\""
+          "Value": "\"5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 08 Aug 2025 16:39:54 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.css.gz",
-      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-tkid0e0zgs.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1449"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 08 Aug 2025 16:39:54 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.tkid0e0zgs.css",
-      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-tkid0e0zgs.gz",
-      "Selectors": [
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip",
-          "Quality": "0.000689655172"
-        }
-      ],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1449"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 08 Aug 2025 16:39:54 GMT"
+          "Value": "Fri, 08 Aug 2025 22:06:19 GMT"
         },
         {
           "Name": "Cache-Control",
           "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Encoding",
-          "Value": "gzip"
-        },
-        {
-          "Name": "Vary",
-          "Value": "Content-Encoding"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "W/\"TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo=\""
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tkid0e0zgs"
+          "Value": "502zs8t2rx"
         },
         {
           "Name": "label",
@@ -2965,13 +2873,13 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo="
+          "Value": "sha256-5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc="
         }
       ]
     },
     {
-      "Route": "css/site.tkid0e0zgs.css",
-      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\css\\site.css",
+      "Route": "css/site.502zs8t2rx.css.gz",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-502zs8t2rx.gz",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -2980,7 +2888,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "4453"
+          "Value": "1768"
         },
         {
           "Name": "Content-Type",
@@ -2988,56 +2896,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo=\""
+          "Value": "\"13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 08 Aug 2025 16:39:54 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "tkid0e0zgs"
-        },
-        {
-          "Name": "label",
-          "Value": "css/site.css"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-TVfhV5cEYo5etRDpOOhocFfIOXcPvxwia4cY0zZn2Mo="
-        }
-      ]
-    },
-    {
-      "Route": "css/site.tkid0e0zgs.css.gz",
-      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-tkid0e0zgs.gz",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1449"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/css"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 08 Aug 2025 16:39:54 GMT"
+          "Value": "Fri, 08 Aug 2025 22:06:19 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3055,7 +2918,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "tkid0e0zgs"
+          "Value": "502zs8t2rx"
         },
         {
           "Name": "label",
@@ -3063,7 +2926,144 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-TPZaaIkp8HtOGu47j2qo7aFjwAZ6u6S4JUB+z46FyQ4="
+          "Value": "sha256-13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-502zs8t2rx.gz",
+      "Selectors": [
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip",
+          "Quality": "0.000565291125"
+        }
+      ],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1768"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 08 Aug 2025 22:06:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "W/\"5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc=\""
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5397"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 08 Aug 2025 22:06:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5QDMpCMnU3RT4ISVym7DtuJwcFDjA+kP28AXFTexPnc="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css.gz",
+      "AssetFile": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\obj\\Debug\\net9.0\\compressed\\1ffbpjaqa8-502zs8t2rx.gz",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1768"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Fri, 08 Aug 2025 22:06:19 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Encoding",
+          "Value": "gzip"
+        },
+        {
+          "Name": "Vary",
+          "Value": "Content-Encoding"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-13mHabxv1nNKtJx/hUwqpCKfUOJeeEKRnNYv18rVP9M="
         }
       ]
     },

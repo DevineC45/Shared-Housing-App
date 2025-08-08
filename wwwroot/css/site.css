@@ -237,6 +237,14 @@ form select {
     margin: 0;
 }
 
+.landing-hero .tagline {
+    font-size: 1.6rem;       /* adjust size */
+    font-weight: 500;        /* 400=normal, 500=medium, 700=bold */
+    color: #4facfe;          /* or any custom colour */
+    font-family: 'Verdana'; /* Tahoma, Geneva, Verdana, sans-serif;*/
+    margin-top: 0.5rem;      /* space under heading */
+}
+
 
 
 
