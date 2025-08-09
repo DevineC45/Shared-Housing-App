@@ -1,0 +1,41 @@
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<!-- Full-page gradient background -->
+<div style="min-height: 80vh; background: linear-gradient(135deg, #4facfe, #8e44ad); display: flex; justify-content: center; align-items: center; padding: 2rem;">
+    <div class="card shadow-lg p-4" style="border-radius: 20px; max-width: 700px; width: 100%; background: white;">
+        <h1 class="text-center mb-4" style="font-weight: 700;">Contact Us</h1>
+        <p class="text-center mb-4">
+            Got a question or feedback about Homigo? Send us a message and we’ll get back to you as soon as possible.
+        </p>
+
+        @if (TempData["ContactOk"] != null)
+        {
+            <div class="alert alert-success text-center">
+                ✅ Thank you for your message! We’ll get back to you shortly.
+            </div>
+        }
+
+        <form method="post" asp-action="Contact">
+            <div class="mb-3">
+                <label for="Name" class="form-label">Your Name</label>
+                <input type="text" class="form-control" id="Name" name="Name" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="Email" class="form-label">Your Email</label>
+                <input type="email" class="form-control" id="Email" name="Email" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="Message" class="form-label">Message</label>
+                <textarea class="form-control" id="Message" name="Message" rows="5" required></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary px-4" style="background: linear-gradient(135deg, #4facfe, #8e44ad); border: none;">Send Message</button>
+            </div>
+        </form>
+    </div>
+</div>

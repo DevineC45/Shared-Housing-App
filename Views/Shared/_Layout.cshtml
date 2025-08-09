@@ -1,6 +1,11 @@
 ﻿@{
     var userId = Context.Session.GetString("UserId");
     var userRole = Context.Session.GetString("UserRole");
+
+    var action = ViewContext.RouteData.Values["action"]?.ToString();
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    bool isPublicMarketingPage = controller == "Home"
+                                 && (action == "About" || action == "Features" || action == "Contact");
 }
 
 <!DOCTYPE html>
@@ -123,8 +128,8 @@
         </nav>
     </header>
 
-    <main class="page-container @ViewData["BodyClass"]">
-    @RenderBody()
+    <main class="@(isPublicMarketingPage ? "" : "page-container") @(ViewData["BodyClass"] ?? "")">
+        @RenderBody()
     </main>
 
     <footer class="border-top footer text-muted mt-4 bg-dark text-center text-light py-3">
