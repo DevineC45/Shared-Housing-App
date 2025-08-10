@@ -5,17 +5,17 @@
     var tenants = ViewBag.Tenants as List<SharedHousingApp.Models.User> ?? new List<SharedHousingApp.Models.User>();
 }
 
-<h2>@ViewData["Title"]</h2>
+<h1 class="text-center mb-4">@ViewData["Title"]</h1>
 
-<form asp-action="Create" method="post">
+<form asp-action="Create" method="post" class="mx-auto" style="max-width: 500px;">
     <div class="mb-3">
-        <label asp-for="Title" class="form-label"></label>
+        <label asp-for="Title" class="form-label fw-bold"></label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Assign To</label>
+        <label class="form-label fw-bold">Assign To</label>
         <select asp-for="AssignedToUserId" class="form-control">
             @foreach (var tenant in tenants)
             {
@@ -24,10 +24,5 @@
         </select>
     </div>
 
-    <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" asp-for="RepeatWeekly" />
-        <label class="form-check-label" asp-for="RepeatWeekly"></label>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-success px-4">Save</button>
 </form>

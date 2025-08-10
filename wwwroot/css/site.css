@@ -300,6 +300,64 @@ form select {
   .tile-media { height: 150px; }
 }
 
+/* Make the announcements page use normal cards instead of a huge rounded "pill" */
+.page-container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; background: transparent; box-shadow:none; border-radius:0; }
+
+/* Announcement cards */
+.announce-card { border-radius: 14px; }
+.announce-title { font-weight: 700; }
+.announce-meta { line-height: 1; }
+
+/* Keep long words/links from overflowing */
+.announce-text { white-space: normal; word-break: break-word; }
+
+/* Tighten inner spacing on smaller screens */
+@media (max-width: 576px) {
+  .announce-actions { width: 100%; justify-content: flex-start; }
+}
+
+/* Make contextual buttons solid again (overrides your global .btn gradient) */
+.btn-success,
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-image: none !important;
+  background-color: #28a745 !important;  /* Bootstrap-ish green */
+  border-color: #28a745 !important;
+  color: #fff !important;
+}
+
+.btn-success:hover,
+.btn-success:active {
+  background-color: #218838 !important;
+  border-color: #1e7e34 !important;
+}
+
+.btn-danger,
+.btn-danger:hover,
+.btn-danger:focus,
+.btn-danger:active {
+  background-image: none !important;
+  background-color: #dc3545 !important;  /* Bootstrap danger red */
+  border-color: #dc3545 !important;
+  color: #fff !important;
+}
+
+.btn-danger:hover,
+.btn-danger:active {
+  background-color: #bb2d3b !important;
+  border-color: #b02a37 !important;
+}
+
+.btn-outline-secondary,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:active {
+  background-image: none !important;
+}
+
+
+
 
 
 

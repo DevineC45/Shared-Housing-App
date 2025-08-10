@@ -1,82 +1,73 @@
 @{
     ViewData["Title"] = "Dashboard";
-    var role = ViewData["Role"]?.ToString();
+    var role = (ViewData["Role"]?.ToString() ?? "").Trim(); // "Tenant" or "Landlord"
     ViewData["BodyClass"] = "dashboard-page";
 }
 
 <div class="container my-4">
     <h1 class="text-center fw-bold mb-2">Welcome To Your Dashboard</h1>
-
-    <div class="row g-4 dashboard-tiles">
-        <!-- Chores -->
-        <div class="col-12 col-md-6">
-            <a class="tile-card" asp-controller="Chores" asp-action="Index">
-                <div class="tile-media" style="background-image:url('/img/tiles/chores.png');"></div>
-                <div class="tile-label">Chores</div>
-                <div class="tile-body">
-                    <p class="tile-text">View all your chores and add new ones.</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- Expenses -->
-        <div class="col-12 col-md-6">
-            <a class="tile-card" asp-controller="Expenses" asp-action="Index">
-                <div class="tile-media" style="background-image:url('/img/tiles/expenses.png');"></div>
-                <div class="tile-label">Expenses</div>
-                <div class="tile-body">
-                    <p class="tile-text">Track what’s owed and add new expenses.</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- Calendar -->
-        <div class="col-12 col-md-6">
-            <a class="tile-card" asp-controller="Calendar" asp-action="Index">
-                <div class="tile-media" style="background-image:url('/img/tiles/calendar.png');"></div>
-                <div class="tile-label">Calendar</div>
-                <div class="tile-body">
-                    <p class="tile-text">See upcoming events and plan the week.</p>
-                </div>
-            </a>
-        </div>
-
-        <!-- Announcements -->
-        <div class="col-12 col-md-6">
-            <a class="tile-card" asp-controller="Announcements" asp-action="Index">
-                <div class="tile-media" style="background-image:url('/img/tiles/announcement.png');"></div>
-                <div class="tile-label">Announcements</div>
-                <div class="tile-body">
-                    <p class="tile-text">Read the latest updates from your landlord.</p>
-                </div>
-            </a>
-        </div>
-    </div>
+    <p class="text-center text-muted mb-4">
+        @(role == "Landlord"
+            ? "You are a landlord. Manage announcements and the calendar."
+            : "You are a tenant. Manage chores, expenses, calendar and announcements.")
+    </p>
 
     @if (role == "Landlord")
     {
-        <p class="text-center text-muted mt-4">
-            You are a landlord. You can post announcements and manage the calendar.
-        </p>
+        <!-- Landlord: 2 tiles -->
+        <div class="row g-4 dashboard-tiles">
+            <div class="col-12 col-md-6">
+                <a class="tile-card" asp-controller="Calendar" asp-action="Index">
+                    <div class="tile-media" style="background-image:url('/img/tiles/calendar.png');"></div>
+                    <div class="tile-label">Calendar</div>
+                    <div class="tile-body"><p class="tile-text">Create and manage events for the property.</p></div>
+                </a>
+            </div>
 
-        <div class="dash-buttons d-flex justify-content-center gap-3 flex-wrap">
-            <a class="btn btn-primary btn-lg px-5" asp-controller="Announcements" asp-action="Create">📢 Post Announcement</a>
-            <a class="btn btn-outline-primary btn-lg px-5" asp-controller="Calendar" asp-action="Index">📅 Calendar</a>
-            <a class="btn btn-info btn-lg px-5" asp-controller="Announcements" asp-action="Index">📜 Announcements</a>
-            <a class="btn btn-secondary btn-lg px-5" asp-controller="Home" asp-action="Features">ℹ️ Features</a>
+            <div class="col-12 col-md-6">
+                <a class="tile-card" asp-controller="Announcements" asp-action="Index">
+                    <div class="tile-media" style="background-image:url('/img/tiles/announcement.png');"></div>
+                    <div class="tile-label">Announcements</div>
+                    <div class="tile-body"><p class="tile-text">Post updates and view recent notices.</p></div>
+                </a>
+            </div>
         </div>
     }
     else
     {
-        <p class="text-center text-muted mt-4">
-            You are a tenant. You can manage your chores and expenses here.
-        </p>
+        <!-- Default/Tenant: 4 tiles -->
+        <div class="row g-4 dashboard-tiles">
+            <div class="col-12 col-md-6">
+                <a class="tile-card" asp-controller="Chores" asp-action="Index">
+                    <div class="tile-media" style="background-image:url('/img/tiles/chores.png');"></div>
+                    <div class="tile-label">Chores</div>
+                    <div class="tile-body"><p class="tile-text">View all your chores and add new ones.</p></div>
+                </a>
+            </div>
 
-        <div class="dash-buttons d-flex justify-content-center gap-3 flex-wrap">
-            <a class="btn btn-primary btn-lg px-5" asp-controller="Chores" asp-action="Index">🧹 Chores</a>
-            <a class="btn btn-info btn-lg px-5" asp-controller="Expenses" asp-action="Index">💰 Expenses</a>
-            <a class="btn btn-outline-secondary btn-lg px-5" asp-controller="Calendar" asp-action="Index">📅 Calendar</a>
-            <a class="btn btn-secondary btn-lg px-5" asp-controller="Announcements" asp-action="Index">📜 Announcements</a>
+            <div class="col-12 col-md-6">
+                <a class="tile-card" asp-controller="Expenses" asp-action="Index">
+                    <div class="tile-media" style="background-image:url('/img/tiles/expenses.png');"></div>
+                    <div class="tile-label">Expenses</div>
+                    <div class="tile-body"><p class="tile-text">Track what’s owed and add new expenses.</p></div>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <a class="tile-card" asp-controller="Calendar" asp-action="Index">
+                    <div class="tile-media" style="background-image:url('/img/tiles/calendar.png');"></div>
+                    <div class="tile-label">Calendar</div>
+                    <div class="tile-body"><p class="tile-text">See upcoming events and plan the week.</p></div>
+                </a>
+            </div>
+
+            <div class="col-12 col-md-6">
+                <a class="tile-card" asp-controller="Announcements" asp-action="Index">
+                    <div class="tile-media" style="background-image:url('/img/tiles/announcement.png');"></div>
+                    <div class="tile-label">Announcements</div>
+                    <div class="tile-body"><p class="tile-text">Read the latest updates from your landlord.</p></div>
+                </a>
+            </div>
         </div>
     }
 </div>

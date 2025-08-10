@@ -100,7 +100,10 @@ namespace SharedHousingApp.Controllers
                     return View(chore);
                 }
 
-                chore.AssignedToUserId = firstTenant.Id;
+                // default values for a fresh chore
+                chore.IsComplete = false; // important
+                if (chore.AssignedToUserId == 0)
+                    chore.AssignedToUserId = firstTenant.Id;
 
                 _context.Chores.Add(chore);
                 _context.SaveChanges();
@@ -129,25 +132,44 @@ namespace SharedHousingApp.Controllers
             return View(chore);
         }
 
-        // POST: Chores/Edit/5
+        // POST: Chores/Edit/5  (safe, field-level update)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Chore chore)
+        public IActionResult Edit(int id, [Bind("Id,Title,AssignedToUserId")] Chore input)
         {
-            if (id != chore.Id) return BadRequest();
-
-            if (ModelState.IsValid)
+            var role = HttpContext.Session.GetString("UserRole");
+            if (role != "Tenant")
             {
-                _context.Update(chore);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Login", "Users");
             }
 
-            ViewBag.Tenants = _context.Users
-                .Where(u => u.Role == "Tenant")
-                .ToList();
+            if (id != input.Id) return BadRequest();
 
-            return View(chore);
+            var chore = _context.Chores.FirstOrDefault(c => c.Id == id);
+            if (chore == null) return NotFound();
+
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Tenants = _context.Users
+                    .Where(u => u.Role == "Tenant")
+                    .ToList();
+                return View(chore);
+            }
+
+            // Update only allowed fields
+            bool assigneeChanged = chore.AssignedToUserId != input.AssignedToUserId;
+
+            chore.Title = input.Title;
+            chore.AssignedToUserId = input.AssignedToUserId;
+
+            // If reassigned, reset completion so the new assignee can complete it
+            if (assigneeChanged)
+            {
+                chore.IsComplete = false;
+            }
+
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Chores/Complete/5
@@ -162,17 +184,27 @@ namespace SharedHousingApp.Controllers
                 .OrderBy(u => u.Id)
                 .ToList();
 
+            if (tenants.Count == 0)
+            {
+                TempData["Message"] = "No tenants available to rotate the chore.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Find next assignee in the rotation
             var currentIndex = tenants.FindIndex(u => u.Id == chore.AssignedToUserId);
+            if (currentIndex < 0) currentIndex = 0; // safety
             var nextIndex = (currentIndex + 1) % tenants.Count;
             var nextTenant = tenants[nextIndex];
 
+            // Rotate
             chore.AssignedToUserId = nextTenant.Id;
-            chore.IsComplete = !chore.RepeatWeekly;
+
+            // After rotation, the chore should be pending for the new assignee
+            chore.IsComplete = false;
 
             _context.SaveChanges();
 
             TempData["Message"] = $"Chore '{chore.Title}' is now assigned to {nextTenant.Name}!";
-
             return RedirectToAction(nameof(Index));
         }
 

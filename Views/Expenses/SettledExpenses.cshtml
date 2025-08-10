@@ -4,45 +4,69 @@
     ViewData["Title"] = "Settled Expenses";
 }
 
-<h2>Settled Expenses</h2>
+<div class="container py-3">
+    <h1 class="text-center mb-3">Settled Expenses</h1>
 
-@if (!Model.Any())
-{
-    <p>You haven’t settled any expenses yet.</p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Title</th>
-                <th>Amount</th>
-                <th>Shared With</th>
-                <th>Each Person Owed</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var expense in Model)
-        {
-            var peopleCount = expense.SharedWithUsers.Count + 1;
-            var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
+    <div class="d-flex justify-content-center mb-3 gap-2 flex-wrap">
+        <a class="btn btn-gradient" asp-action="Index">Back to My Expenses</a>
+    </div>
 
-            <tr>
-                <td>@expense.Date.ToShortDateString()</td>
-                <td>@expense.Title</td>
-                <td>@("£" + expense.Amount.ToString("0.00"))</td>
-                <td>
-                    <ul class="mb-0">
-                        @foreach (var user in expense.SharedWithUsers)
-                        {
-                            <li>@user.Name</li>
-                        }
-                    </ul>
-                </td>
-                <td>@("£" + splitAmount.ToString("0.00"))</td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">You haven’t settled any expenses yet.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-dark table-striped align-middle rounded-3 overflow-hidden shadow-sm">
+                <thead class="table-light">
+                    <tr>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Shared With</th>
+                        <th>Each Person Owed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var expense in Model)
+                {
+                    var peopleCount = expense.SharedWithUsers.Count + 1;
+                    var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
+
+                    <tr>
+                        <td>@expense.Date.ToShortDateString()</td>
+                        <td>@expense.Title</td>
+                        <td>@("£" + expense.Amount.ToString("0.00"))</td>
+                        <td>
+                            <ul class="mb-0">
+                                @foreach (var user in expense.SharedWithUsers)
+                                {
+                                    <li>@user.Name</li>
+                                }
+                            </ul>
+                        </td>
+                        <td>@("£" + splitAmount.ToString("0.00"))</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<style>
+    .btn-gradient {
+        background: linear-gradient(to right, #4facfe, #8e44ad);
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        text-decoration: none;
+    }
+    .btn-gradient:hover {
+        opacity: 0.9;
+        color: white;
+    }
+</style>

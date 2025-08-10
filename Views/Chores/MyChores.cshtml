@@ -2,47 +2,53 @@
 
 @{
     ViewData["Title"] = "My Chores";
+    ViewData["BodyClass"] = "flat-page";   // keep pill disabled
 }
 
-<h2>My Chores</h2>
+<div class="container py-3">
+    <h1 class="text-center mb-3">My Chores</h1>
 
-@if (!Model.Any())
-{
-    <p>You have no chores assigned at the moment.</p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        @foreach (var chore in Model)
-        {
-            <tr>
-                <td>@chore.Title</td>
-                <td>
-                    @if (chore.IsComplete)
-                    {
-                        <span class="badge bg-success">Complete</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-warning text-dark">Pending</span>
-                    }
-                </td>
-                <td>
-                    <form asp-action="Complete" method="post">
-                        <input type="hidden" name="id" value="@chore.Id" />
-                        <button class="btn btn-sm btn-primary">Mark Complete</button>
-                    </form>
-                </td>
-            </tr>
-        }
-        </tbody>
-    </table>
-}
+    <div class="d-flex justify-content-center mb-3 gap-2 flex-wrap">
+        <a class="btn btn-outline-primary" asp-action="Index">Back to Chores Hub</a>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="alert alert-info text-center">You have no chores assigned at the moment.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover table-dark table-striped align-middle mb-0 rounded-3 overflow-hidden">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var chore in Model)
+                {
+                    <tr>
+                        <td>@chore.Title</td>
+                        <td class="text-end">
+                            @* Only show the button when the chore is not yet completed *@
+                            @if (!chore.IsComplete)
+                            {
+                                <form asp-action="Complete" method="post" class="d-inline">
+                                    <input type="hidden" name="id" value="@chore.Id" />
+                                    <button class="btn btn-success btn-sm">Mark Complete</button>
+                                </form>
+                            }
+                            else
+                            {
+                                @* intentionally blank – no 'Completed' badge *@
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
