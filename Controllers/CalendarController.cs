@@ -28,17 +28,13 @@ namespace SharedHousingApp.Controllers
         public IActionResult Create(DateTime? date)
         {
             if (HttpContext.Session.GetString("UserId") == null)
-            {
                 return RedirectToAction("Login", "Users");
-            }
 
-            var model = new CalendarEvent();
-
-            // ✅ Pre-fill the date if provided
-            if (date.HasValue)
+            var model = new CalendarEvent
             {
-                model.Date = date.Value.Date;
-            }
+                // if query has a date use it; otherwise today
+                Date = (date?.Date) ?? DateTime.Today
+            };
 
             return View(model);
         }

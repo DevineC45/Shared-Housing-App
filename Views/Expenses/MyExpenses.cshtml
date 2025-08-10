@@ -7,8 +7,16 @@
 
 <h1 class="text-center mb-4">My Expenses</h1>
 
-<div class="d-flex justify-content-start mb-3">
-    <a class="btn btn-info btn-lg" asp-action="SettledExpenses">View Settled Expenses</a>
+<div class="d-flex justify-content-start mb-3 gap-2 flex-wrap">
+    <a class="btn btn-gradient btn-lg"
+       asp-controller="Expenses" asp-action="Index">
+        All Expenses
+    </a>
+
+    <a class="btn btn-gradient btn-lg"
+       asp-controller="Expenses" asp-action="SettledExpenses">
+        View Settled Expenses
+    </a>
 </div>
 
 @if (!Model.Any())
@@ -58,7 +66,11 @@ else
                         <td>
                             @if (expense.PaidByUserId.ToString() == currentUserId && !expense.IsSettled)
                             {
-                                <a asp-action="Settle" asp-route-id="@expense.Id" class="btn btn-sm text-white" style="background: linear-gradient(90deg, #4facfe, #9b59b6);">Mark as Settled</a>
+                                <a asp-action="Settle"
+                                   asp-route-id="@expense.Id"
+                                   class="btn btn-gradient btn-sm">
+                                    Mark as Settled
+                                </a>
                             }
                             else if (expense.IsSettled)
                             {
@@ -71,3 +83,19 @@ else
         </table>
     </div>
 }
+
+<style>
+  .btn-gradient {
+      background: linear-gradient(to right, #4facfe, #8e44ad);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+  }
+  .btn-gradient:hover {
+      opacity: 0.9;
+      color: white;
+  }
+</style>

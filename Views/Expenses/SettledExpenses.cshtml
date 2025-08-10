@@ -8,7 +8,15 @@
     <h1 class="text-center mb-3">Settled Expenses</h1>
 
     <div class="d-flex justify-content-center mb-3 gap-2 flex-wrap">
-        <a class="btn btn-gradient" asp-action="Index">Back to My Expenses</a>
+        <a class="btn btn-gradient"
+           asp-controller="Expenses" asp-action="Index">
+            All Expenses
+        </a>
+
+        <a class="btn btn-gradient"
+           asp-controller="Expenses" asp-action="MyExpenses">
+            Back to My Expenses
+        </a>
     </div>
 
     @if (!Model.Any())
@@ -56,17 +64,17 @@
 </div>
 
 <style>
-    .btn-gradient {
-        background: linear-gradient(to right, #4facfe, #8e44ad);
-        color: white;
-        border: none;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        text-decoration: none;
-    }
-    .btn-gradient:hover {
-        opacity: 0.9;
-        color: white;
-    }
+  .btn-gradient {
+      background: linear-gradient(to right, #4facfe, #8e44ad);
+      color: white;
+      border: none;
+      padding: 0.5rem
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+  }
+  .btn-gradient:hover {
+      opacity: 0.9;
+      color: white;
+  }
 </style>

@@ -1,16 +1,49 @@
 @model SharedHousingApp.Models.Expense
+@{
+    ViewData["Title"] = "Confirm Settle";
+}
 
-<h2>Confirm Settle</h2>
+<div class="container py-5">
+  <div class="row min-vh-75 justify-content-center align-items-center">
+    <div class="col-12 col-md-8 col-lg-6">
+      <div class="card confirm-card shadow-lg border-0">
+        <div class="card-header bg-white border-0">
+          <h1 class="h4 mb-0 text-dark fw-bold">Confirm Settle</h1>
+        </div>
 
-<p>Are you sure you want to mark this expense as settled?</p>
+        <div class="card-body">
+          <p class="mb-3">Are you sure you want to mark this expense as settled?</p>
+          <ul class="mb-4 ps-3">
+            <li><strong>Title:</strong> @Model.Title</li>
+            <li><strong>Amount:</strong> £@Model.Amount.ToString("0.00")</li>
+          </ul>
 
-<ul>
-    <li><strong>Title:</strong> @Model.Title</li>
-    <li><strong>Amount:</strong> £@Model.Amount.ToString("0.00")</li>
-</ul>
+          <!-- POST hits [HttpPost, ActionName("Settle")] -->
+          <form asp-action="Settle" asp-controller="Expenses" method="post" class="d-flex gap-2 flex-wrap">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-danger fw-semibold px-4">
+              Yes, Mark as Settled
+            </button>
+            <a asp-action="MyExpenses" asp-controller="Expenses" class="btn btn-gradient fw-semibold px-4">
+              Cancel
+            </a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<form asp-action="Settle" method="post">
-    <input type="hidden" asp-for="Id" />
-    <button type="submit" class="btn btn-danger">Yes, Mark as Settled</button>
-    <a class="btn btn-secondary" asp-action="MyExpenses">Cancel</a>
-</form>
+<style>
+  .btn-gradient{
+    background: linear-gradient(135deg, #4facfe, #8e44ad);
+    color:#fff; border:0; border-radius:.5rem;
+  }
+  .btn-gradient:hover{ opacity:.9; color:#fff; }
+  .confirm-card{
+    border-radius: 1rem;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: saturate(140%) blur(6px);
+  }
+</style>

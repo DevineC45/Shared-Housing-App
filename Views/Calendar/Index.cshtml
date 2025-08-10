@@ -6,160 +6,321 @@
     const currentUserName = "@currentUser";
 </script>
 
-<h2 class="mb-4">📅 Shared Calendar</h2>
+<!-- ===== Dark Calendar Styles ===== -->
+<style>
+  :root {
+    --calendar-bg: #0b1020;           /* card bg */
+    --calendar-bg-alt: #0d1327;       /* stripe alt */
+    --calendar-surface: #0f172a;      /* inner surface */
+    --calendar-border: rgba(255,255,255,.08);
+    --calendar-text: #e5e7eb;         /* primary text */
+    --calendar-muted: #9aa0ac;        /* muted text */
+    --calendar-accent: #7c3aed;       /* purple accent */
+    --calendar-accent-2: #3b82f6;     /* blue accent */
+    --calendar-event: #3b82f6;
+    --calendar-event-text: #fff;
+    --calendar-today-ring: rgba(124,58,237,.55);
+  }
 
-<div class="mb-3">
-    <a class="btn btn-primary" asp-action="Create" asp-controller="Calendar">
-        ➕ Create Event
-    </a>
+  .calendar-wrap { max-width: 1200px; margin: 0 auto; }
+  .calendar-card {
+    background: linear-gradient(180deg, var(--calendar-bg) 0%, #0a0f1d 100%);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.35);
+    padding: 16px;
+    border: 1px solid var(--calendar-border);
+    color: var(--calendar-text);
+  }
+
+  /* Toolbar */
+  .fc { --fc-border-color: var(--calendar-border); }
+  .fc .fc-toolbar-title { font-size: 1.4rem; color: var(--calendar-text); }
+  .fc .fc-button {
+    padding: 6px 12px; font-size: .9rem; border-radius: 12px; border: 0;
+    background: linear-gradient(135deg, var(--calendar-accent-2), var(--calendar-accent));
+    color: #fff;
+    box-shadow: 0 6px 16px rgba(59,130,246,.35);
+  }
+  .fc .fc-button:hover { filter: brightness(1.05); }
+  .fc .fc-button-primary:not(:disabled).fc-button-active,
+  .fc .fc-button-primary:not(:disabled):active {
+    background: linear-gradient(135deg, var(--calendar-accent), var(--calendar-accent-2));
+    color: #fff;
+  }
+
+  /* Grid + stripes like your dark tables */
+  .fc-theme-standard .fc-scrollgrid,
+  .fc .fc-daygrid-day,
+  .fc .fc-daygrid-day-frame { background: transparent; }
+  .fc .fc-daygrid { background: var(--calendar-surface); border-radius: 12px; overflow: hidden; }
+
+  /* Weekly stripe rows */
+  .fc .fc-daygrid-row:nth-child(odd) .fc-daygrid-day { background: var(--calendar-surface); }
+  .fc .fc-daygrid-row:nth-child(even) .fc-daygrid-day { background: var(--calendar-bg-alt); }
+
+  /* Non-current month */
+  .fc .fc-day-other { color: var(--calendar-muted); opacity: .75; }
+
+  /* Day numbers */
+  .fc .fc-daygrid-day-number {
+    font-weight: 700; color: var(--calendar-text); text-decoration: none;
+  }
+
+  /* Today ring for visibility on dark */
+  .fc .fc-day-today { position: relative; }
+  .fc .fc-day-today::after {
+    content: ""; position: absolute; inset: 6px; border-radius: 10px;
+    box-shadow: 0 0 0 2px var(--calendar-today-ring) inset;
+    pointer-events: none;
+  }
+
+  /* Cell height */
+  .fc .fc-daygrid-day-frame { min-height: 120px; }
+
+  /* Events: pill style */
+  .fc .fc-daygrid-event {
+    border: 0; border-radius: 8px; padding: 4px 8px; font-size: 12px; line-height: 1.25;
+    background: var(--calendar-event); color: var(--calendar-event-text);
+    box-shadow: 0 4px 12px rgba(59,130,246,.25);
+  }
+
+  /* “+ more” popover – dark */
+  .fc-theme-standard .fc-popover {
+    background: #0f172a; color: var(--calendar-text);
+    border: 1px solid var(--calendar-border); border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.45);
+  }
+  .fc-theme-standard .fc-popover .fc-popover-header {
+    background: #111827; color: var(--calendar-text);
+    border-bottom: 1px solid var(--calendar-border);
+  }
+
+  /* Tiny edit/delete buttons inside events */
+  .fc-event-ops {
+    margin-top: 6px; display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .fc-event-ops .btn {
+    padding: 2px 6px; font-size: 11px; line-height: 1.1; border-radius: 6px;
+  }
+  .btn-outline-primary.btn-sm {
+    --bs-btn-color: #c7d2fe; --bs-btn-border-color: rgba(99,102,241,.6);
+    --bs-btn-hover-bg: rgba(99,102,241,.15); --bs-btn-hover-border-color: rgba(99,102,241,.9);
+  }
+  .btn-outline-danger.btn-sm {
+    --bs-btn-color: #fecaca; --bs-btn-border-color: rgba(239,68,68,.6);
+    --bs-btn-hover-bg: rgba(239,68,68,.15); --bs-btn-hover-border-color: rgba(239,68,68,.9);
+  }
+
+  /* Buttons above calendar */
+  .dark-toolbar .btn-primary {
+    background: linear-gradient(135deg, var(--calendar-accent-2), var(--calendar-accent));
+    border: 0; box-shadow: 0 8px 24px rgba(124,58,237,.35);
+  }
+  .dark-toolbar .btn-primary:hover { filter: brightness(1.05); }
+</style>
+
+<h1 class="mb-4 text-dark">Shared Calendar</h1>
+
+<div class="mb-3 dark-toolbar">
+  <a class="btn btn-primary"
+   asp-action="Create" asp-controller="Calendar"
+   asp-route-date="@DateTime.Today.ToString("yyyy-MM-dd")">
+  Create Event
+</a>
 </div>
 
-<div id="calendar"></div>
+<div class="calendar-wrap">
+  <div class="calendar-card">
+    <div id="calendar"></div>
+  </div>
+</div>
 
-<!-- View Event Modal -->
+<!-- View Event Modal (kept light like Chores/Expenses for readability) -->
 <div class="modal fade" id="viewEventModal" tabindex="-1" aria-labelledby="viewEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewEventTitle"></h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <p><strong>Date:</strong> <span id="viewEventDate"></span></p>
-                <p><strong>Added By:</strong> <span id="viewEventCreator"></span></p>
-                <p id="viewEventDescription"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-white text-dark">
+      <div class="modal-header">
+        <h5 class="modal-title" id="viewEventTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Date:</strong> <span id="viewEventDate"></span></p>
+        <p><strong>Added By:</strong> <span id="viewEventCreator"></span></p>
+        <p id="viewEventDescription"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
     </div>
+  </div>
 </div>
 
-<!-- Edit Modal -->
+<!-- Edit Modal (light) -->
 <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="editEventForm">
-                @Html.AntiForgeryToken()
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <input type="hidden" id="editEventId" />
-                    <div class="mb-3">
-                        <label class="form-label">Title</label>
-                        <input type="text" class="form-control" id="editTitle" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Date</label>
-                        <input type="date" class="form-control" id="editDate" required />
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Description</label>
-                        <textarea class="form-control" id="editDescription" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                </div>
-            </form>
+  <div class="modal-dialog">
+    <div class="modal-content bg-white text-dark">
+      <form id="editEventForm">
+        @Html.AntiForgeryToken()
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+        <div class="modal-body">
+          <input type="hidden" id="editEventId" />
+          <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input type="text" class="form-control" id="editTitle" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Date</label>
+            <input type="date" class="form-control" id="editDate" required />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" id="editDescription" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
-<!-- Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal (light) -->
 <div class="modal fade" id="deleteEventModal" tabindex="-1" aria-labelledby="deleteEventModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="deleteEventForm">
-                @Html.AntiForgeryToken()
-                <div class="modal-header">
-                    <h5 class="modal-title">Delete Event</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    Are you sure you want to delete this event?
-                    <input type="hidden" id="deleteEventId" />
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </div>
-            </form>
+  <div class="modal-dialog">
+    <div class="modal-content bg-white text-dark">
+      <form id="deleteEventForm">
+        @Html.AntiForgeryToken()
+        <div class="modal-header">
+          <h5 class="modal-title">Delete Event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
         </div>
+        <div class="modal-body">
+          Are you sure you want to delete this event?
+          <input type="hidden" id="deleteEventId" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 
 @section Scripts {
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const calendarEl = document.getElementById('calendar');
+  document.addEventListener('DOMContentLoaded', function () {
+    const calendarEl = document.getElementById('calendar');
 
-        const calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            height: 'auto',
-            events: '/Calendar/GetEvents',
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      height: 'auto',
+      expandRows: true,
+      fixedWeekCount: true,
+      showNonCurrentDates: true,
+      dayMaxEventRows: 2,
+      moreLinkClick: 'popover',
+      events: '/Calendar/GetEvents',
 
-            // ✅ Only trigger Create when clicking a date
-            dateClick: function (info) {
-                const clickedDate = info.dateStr;
-                window.location.href = `/Calendar/Create?date=${clickedDate}`;
-            },
+      dateClick: function (info) {
+        const clickedDate = info.dateStr;
+        window.location.href = `/Calendar/Create?date=${clickedDate}`;
+      },
 
-            // ✅ Slightly bigger dates
-            dayCellDidMount: function (arg) {
-                arg.el.style.fontSize = "16px";
-                arg.el.style.cursor = "pointer";
-            },
+      dayCellDidMount: function (arg) {
+        arg.el.style.fontSize = "16px";
+        arg.el.style.cursor = "pointer";
+      },
 
-            // ✅ Show event details in modal when clicked
-            eventClick: function (info) {
-                document.getElementById('viewEventTitle').innerText = info.event.title;
-                document.getElementById('viewEventDate').innerText = info.event.startStr;
-                document.getElementById('viewEventCreator').innerText = info.event.extendedProps.createdBy;
-                document.getElementById('viewEventDescription').innerText = info.event.extendedProps.description || 'No description.';
+      eventClick: function (info) {
+        document.getElementById('viewEventTitle').innerText = info.event.title;
+        document.getElementById('viewEventDate').innerText = info.event.startStr;
+        document.getElementById('viewEventCreator').innerText = info.event.extendedProps.createdBy;
+        document.getElementById('viewEventDescription').innerText =
+          info.event.extendedProps.description || 'No description.';
+        new bootstrap.Modal(document.getElementById('viewEventModal')).show();
+      },
 
-                new bootstrap.Modal(document.getElementById('viewEventModal')).show();
-            },
+      eventDidMount: function (info) {
+        const createdBy = info.event.extendedProps.createdBy;
+        if (createdBy === currentUserName) {
+          const btnGroup = document.createElement('div');
+          btnGroup.className = 'fc-event-ops';
 
-            // ✅ Event rendering with edit/delete for creator
-            eventDidMount: function (info) {
-                const createdBy = info.event.extendedProps.createdBy;
+          const editBtn = document.createElement('button');
+          editBtn.type = 'button';
+          editBtn.className = 'btn btn-outline-primary btn-sm';
+          editBtn.textContent = 'Edit';
+          editBtn.onclick = function () {
+            document.getElementById('editEventId').value = info.event.id;
+            document.getElementById('editTitle').value = info.event.title;
+            document.getElementById('editDate').value = info.event.startStr;
+            document.getElementById('editDescription').value = info.event.extendedProps.description || '';
+            new bootstrap.Modal(document.getElementById('editEventModal')).show();
+          };
 
-                if (createdBy === currentUserName) {
-                    const btnGroup = document.createElement('div');
-                    btnGroup.classList.add('mt-2');
+          const deleteBtn = document.createElement('button');
+          deleteBtn.type = 'button';
+          deleteBtn.className = 'btn btn-outline-danger btn-sm';
+          deleteBtn.textContent = 'Delete';
+          deleteBtn.onclick = function () {
+            document.getElementById('deleteEventId').value = info.event.id;
+            new bootstrap.Modal(document.getElementById('deleteEventModal')).show();
+          };
 
-                    const editBtn = document.createElement('button');
-                    editBtn.innerText = 'Edit';
-                    editBtn.classList.add('btn', 'btn-sm', 'btn-outline-primary', 'me-2');
-                    editBtn.onclick = function () {
-                        document.getElementById('editEventId').value = info.event.id;
-                        document.getElementById('editTitle').value = info.event.title;
-                        document.getElementById('editDate').value = info.event.startStr;
-                        document.getElementById('editDescription').value = info.event.extendedProps.description || '';
-                        new bootstrap.Modal(document.getElementById('editEventModal')).show();
-                    };
-
-                    const deleteBtn = document.createElement('button');
-                    deleteBtn.innerText = 'Delete';
-                    deleteBtn.classList.add('btn', 'btn-sm', 'btn-outline-danger');
-                    deleteBtn.onclick = function () {
-                        document.getElementById('deleteEventId').value = info.event.id;
-                        new bootstrap.Modal(document.getElementById('deleteEventModal')).show();
-                    };
-
-                    btnGroup.appendChild(editBtn);
-                    btnGroup.appendChild(deleteBtn);
-                    info.el.appendChild(btnGroup);
-                }
-            }
-        });
-
-        calendar.render();
+          btnGroup.appendChild(editBtn);
+          btnGroup.appendChild(deleteBtn);
+          info.el.appendChild(btnGroup);
+        }
+      }
     });
+
+    calendar.render();
+
+    // ---- Edit form submit ----
+    document.getElementById('editEventForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('editEventId').value;
+      const data = {
+        Id: id,
+        Title: document.getElementById('editTitle').value,
+        Date: document.getElementById('editDate').value,
+        Description: document.getElementById('editDescription').value,
+        CreatedByName: currentUserName
+      };
+      const token = document.querySelector('#editEventForm input[name="__RequestVerificationToken"]').value;
+
+      const res = await fetch(`/Calendar/Edit/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'RequestVerificationToken': token },
+        body: JSON.stringify(data)
+      });
+      if (res.ok) {
+        bootstrap.Modal.getInstance(document.getElementById('editEventModal')).hide();
+        location.reload();
+      }
+    });
+
+    // ---- Delete form submit ----
+    document.getElementById('deleteEventForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = document.getElementById('deleteEventId').value;
+      const token = document.querySelector('#deleteEventForm input[name="__RequestVerificationToken"]').value;
+
+      const res = await fetch(`/Calendar/Delete/${id}`, {
+        method: 'POST',
+        headers: { 'RequestVerificationToken': token }
+      });
+      if (res.ok) {
+        bootstrap.Modal.getInstance(document.getElementById('deleteEventModal')).hide();
+        location.reload();
+      }
+    });
+  });
 </script>
 }
