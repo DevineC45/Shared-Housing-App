@@ -21,6 +21,22 @@
       "PackagePath": "staticwebassets\\img\\hmateswide.png"
     },
     {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\tiles\\announcement.png",
+      "PackagePath": "staticwebassets\\img\\tiles\\announcement.png"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\tiles\\calendar.png",
+      "PackagePath": "staticwebassets\\img\\tiles\\calendar.png"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\tiles\\chores.png",
+      "PackagePath": "staticwebassets\\img\\tiles\\chores.png"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\tiles\\expenses.png",
+      "PackagePath": "staticwebassets\\img\\tiles\\expenses.png"
+    },
+    {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },

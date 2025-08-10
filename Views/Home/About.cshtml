@@ -2,37 +2,39 @@
     ViewData["Title"] = "About Us";
 }
 
-<!-- Full-page gradient background -->
-<div style="min-height: 80vh; background: linear-gradient(135deg, #4facfe, #8e44ad); display: flex; justify-content: center; align-items: center; padding: 2rem;">
-    <div class="card shadow-lg p-4" style="border-radius: 20px; max-width: 800px; width: 100%; background: white;">
-        <h1 class="text-center mb-4" style="font-weight: 700;">About Homigo</h1>
-        <p class="lead text-center mb-4">
-            Homigo is designed to make shared living simple, organised, and stress-free.
-        </p>
+<div class="container py-4 fs-4"> <!-- reduced py from 5 to 4 for less vertical gap -->
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <h1 class="mb-4 text-center fw-bold fs-1">About Homigo</h1> <!-- bigger heading -->
 
-        <p>
-            Whether you’re sharing a house with friends, family, or flatmates, Homigo helps you stay on top of 
-            everything that matters. From managing chores to splitting expenses and keeping a shared calendar, 
-            we make it easy to stay connected and coordinated.
-        </p>
+            <p class="lead text-center mb-4">
+                Homigo is designed to make shared living simple, organised, and stress-free.
+            </p>
 
-        <h4 class="mt-4">Our Mission</h4>
-        <p>
-            We believe that living together should be fun, fair, and stress-free. Homigo gives you the tools 
-            to communicate clearly, divide responsibilities, and keep everyone on the same page.
-        </p>
+            <p>
+                Whether you’re sharing a house with friends, family, or flatmates, Homigo helps you stay on top of 
+                everything that matters. From managing chores to splitting expenses and keeping a shared calendar, 
+                we make it easy to stay connected and coordinated.
+            </p>
 
-        <h4 class="mt-4">Why Choose Homigo?</h4>
-        <ul>
-            <li>Manage household chores with ease</li>
-            <li>Track and split expenses fairly</li>
-            <li>Keep a shared calendar of important events</li>
-            <li>Post announcements for everyone to see</li>
-        </ul>
+            <h4 class="mt-4 fw-bold">Our Mission</h4> <!-- bold -->
+            <p>
+                We believe that living together should be fun, fair, and stress-free. Homigo gives you the tools 
+                to communicate clearly, divide responsibilities, and keep everyone on the same page.
+            </p>
 
-        <div class="text-center mt-4">
-            <a asp-controller="Home" asp-action="Features" class="btn btn-primary me-2" style="background: linear-gradient(135deg, #4facfe, #8e44ad); border: none;">See Our Features</a>
-            <a asp-controller="Users" asp-action="Register" class="btn btn-outline-primary">Get Started</a>
+            <h4 class="mt-4 fw-bold">Why Choose Homigo?</h4> <!-- bold -->
+            <ul>
+                <li>Manage household chores with ease</li>
+                <li>Track and split expenses fairly</li>
+                <li>Keep a shared calendar of important events</li>
+                <li>Post announcements for everyone to see</li>
+            </ul>
+
+            <div class="text-center mt-5">
+                <a asp-controller="Home" asp-action="Features" class="btn btn-primary me-2">See Our Features</a>
+                <a asp-controller="Users" asp-action="Register" class="btn btn-outline-primary">Get Started</a>
+            </div>
         </div>
     </div>
 </div>
