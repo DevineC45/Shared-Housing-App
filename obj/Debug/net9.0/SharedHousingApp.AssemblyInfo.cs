@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SharedHousingApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+addc8d4cc34d257d56823b3eade8ac4945336792")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0ddcde3fccd84abc8369d9b5a01fec20d602cfb3")]
 [assembly: System.Reflection.AssemblyProductAttribute("SharedHousingApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SharedHousingApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

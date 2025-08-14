@@ -13,16 +13,20 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\icons\\icon-192.png",
+      "PackagePath": "staticwebassets\\icons\\icon-192.png"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\icons\\icon-512.png",
+      "PackagePath": "staticwebassets\\icons\\icon-512.png"
+    },
+    {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\Homigo.png",
       "PackagePath": "staticwebassets\\img\\Homigo.png"
     },
     {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmates.png",
       "PackagePath": "staticwebassets\\img\\hmates.png"
-    },
-    {
-      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\hmateswide.png",
-      "PackagePath": "staticwebassets\\img\\hmateswide.png"
     },
     {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\img\\tiles\\announcement.png",
@@ -283,6 +287,18 @@
     {
       "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\lib\\jquery\\dist\\jquery.slim.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\manifest.webmanifest",
+      "PackagePath": "staticwebassets\\manifest.webmanifest"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\offline.html",
+      "PackagePath": "staticwebassets\\offline.html"
+    },
+    {
+      "Id": "C:\\Users\\Conor\\OneDrive - Ulster University\\Desktop\\COM814 - Project Module\\SharedHousingApp\\wwwroot\\service-worker.js",
+      "PackagePath": "staticwebassets\\service-worker.js"
     },
     {
       "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.SharedHousingApp.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
