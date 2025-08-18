@@ -5,7 +5,7 @@
     var action = ViewContext.RouteData.Values["action"]?.ToString();
     var controller = ViewContext.RouteData.Values["controller"]?.ToString();
     bool isPublicMarketingPage = controller == "Home"
-                                 && (action == "About" || action == "Features" || action == "Contact");
+                                 && (action == "About" || action == "Features" || action == "Contact" || action == "Privacy");
 }
 
 <!DOCTYPE html>
@@ -26,12 +26,11 @@
             <div class="container d-flex justify-content-between align-items-center px-4">
 
                 <!-- Left: Logo + Brand -->
-            <a class="navbar-brand d-flex align-items-center fw-bold text-light me-4"
-                    asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand d-flex align-items-center fw-bold text-light me-4"
+                   asp-controller="Home" asp-action="Index">
                     <img src="~/img/homigo.png" alt="Homigo" class="brand-logo me-2" height="28" />
-                <span>Homigo</span>
-            </a>
-
+                    <span>Homigo</span>
+                </a>
 
                 <!-- Center: Navigation Links -->
                 <div class="collapse navbar-collapse justify-content-center">

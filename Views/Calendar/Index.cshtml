@@ -1,5 +1,6 @@
 @{
     ViewData["Title"] = "Shared Calendar";
+    ViewData["BodyClass"] = "calendar-page";   // <- add this
     var currentUser = Context.Session.GetString("UserName");
 }
 <script>

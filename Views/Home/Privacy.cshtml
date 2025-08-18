@@ -1,6 +1,48 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    ViewData["Title"] = "Privacy";
+    ViewData["BodyClass"] = "landing-page";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<h1>Privacy</h1>
+<p class="text-muted">Last updated: @DateTime.UtcNow.ToString("yyyy-MM-dd")</p>
+
+<p>
+    Homigo respects your privacy. We collect only what we need to run the app and never sell your data.
+</p>
+
+<h5>What we collect</h5>
+<ul>
+    <li>Account details (name, email) to sign you in.</li>
+    <li>App content you create (chores, expenses, calendar items).</li>
+    <li>Basic device/usage info for security and performance.</li>
+</ul>
+
+<h5>How we use it</h5>
+<ul>
+    <li>Provide and improve Homigo’s features.</li>
+    <li>Authenticate users and keep your account secure.</li>
+    <li>Send essential notifications (e.g., password reset).</li>
+</ul>
+
+<h5>Sharing</h5>
+<p>
+    We don’t sell your data. We only share it with service providers who help us operate the app,
+    and only as needed and under contract.
+</p>
+
+<h5>Retention</h5>
+<p>
+    We keep your data while your account is active or as needed to provide the service.
+    You can request deletion at any time.
+</p>
+
+<h5>Cookies</h5>
+<p>
+    We use cookies for sign-in and session management. You can disable cookies in your browser,
+    but parts of the app may not work.
+</p>
+
+<h5>Contact</h5>
+<p>
+    Questions? Email <a href="mailto:support@homigo.app" class="link-dark">support@homigo.app</a>.
+</p>

@@ -121,7 +121,7 @@ form select {
 /* --------- Calendar Styling --------- */
 #calendar {
   max-width: 900px;
-  margin: 0 auto 3rem;
+  margin: 0 auto;
   padding: 20px 0;
 }
 
@@ -190,7 +190,7 @@ form select {
 
 .landing-hero {
     max-width: 800x; /* keep it narrower */
-    margin: 0 auto;
+    margin: 0 auto 10rem;
     padding: 2rem;
     border-radius: 2rem;
     box-shadow: 0 20px 40px rgba(0,0,0,0.12);
@@ -248,7 +248,7 @@ form select {
 /* Only the dashboard's main should be shell-less */
 .dashboard-page.page-container {
   max-width: 1100px;
-  margin: 2rem auto;
+  margin: 2rem auto 12rem;
   padding: 0;
   background: transparent;
   border-radius: 0;
@@ -365,7 +365,16 @@ form select {
 .brand-logo { height: 40px; width: auto; display: block; }
 
 
+/* Give the calendar page a little breathing room above the footer */
+.calendar-page {
+  padding-bottom: 2.5rem;        /* tweak to taste */
+}
 
+@media (min-width: 992px) {
+  .calendar-page {
+    padding-bottom: 6rem;
+  }
+}
 
 
 
