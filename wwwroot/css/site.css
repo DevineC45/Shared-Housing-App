@@ -376,8 +376,15 @@ form select {
   }
 }
 
+/* ---------- Validation styling for friendly "Date is required." ---------- */
+/* Field-level validation messages (span asp-validation-for=...) */
+.field-validation-error,
+span.text-danger {
+  color: #fff !important;
+  font-weight: 700;
+}
 
-
-
-
-
+/* Hide the global bullet list if ValidationSummary is present on dark bg */
+.validation-summary-errors { 
+  display: none; 
+}

@@ -34,7 +34,7 @@ else
                 @foreach (var expense in Model)
                 {
                     <tr>
-                        <td>@expense.Date.ToShortDateString()</td>
+                        <td>@(expense.Date?.ToShortDateString())</td>
                         <td>@expense.Title</td>
                         <td>@expense.PaidByUser?.Name</td>
                         <td>£@expense.Amount.ToString("0.00")</td>

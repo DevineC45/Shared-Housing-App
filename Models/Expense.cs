@@ -11,8 +11,9 @@ public class Expense
 
     public decimal Amount { get; set; }
 
+    [Required(ErrorMessage = "Date is required.")]
     [DataType(DataType.Date)]
-    public DateTime Date { get; set; } = DateTime.Today;
+    public DateTime? Date { get; set; }   // nullable so Required can fire
 
     public int PaidByUserId { get; set; }
     public User? PaidByUser { get; set; }

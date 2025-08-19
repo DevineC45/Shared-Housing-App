@@ -14,6 +14,18 @@ namespace SharedHousingApp.Controllers
             _context = context;
         }
 
+        // helper: populate housemates list excluding the current user
+        private void PopulateHousematesExceptCurrent()
+        {
+            var userId = HttpContext.Session.GetString("UserId");
+            int me = string.IsNullOrEmpty(userId) ? -1 : int.Parse(userId);
+
+            ViewBag.Housemates = _context.Users
+                .Where(u => u.Role == "Tenant" && u.Id != me)
+                .OrderBy(u => u.Name)
+                .ToList();
+        }
+
         // GET: Expenses
         public IActionResult Index()
         {
@@ -72,44 +84,33 @@ namespace SharedHousingApp.Controllers
             if (role != "Tenant" || string.IsNullOrEmpty(userId))
                 return RedirectToAction("Login", "Users");
 
-            int id = int.Parse(userId);
-
-            var tenants = _context.Users
-                .Where(u => u.Role == "Tenant" && u.Id != id)
-                .OrderBy(u => u.Name)
-                .ToList();
-
-            ViewBag.Tenants = tenants;
-
+            PopulateHousematesExceptCurrent();
             return View();
         }
 
         // POST: Expenses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Expense expense, List<int> SelectedUserIds)
+        public IActionResult Create(Expense expense, int[] shareWithUserIds)
         {
             var userId = HttpContext.Session.GetString("UserId");
             if (userId == null) return RedirectToAction("Login", "Users");
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                expense.PaidByUserId = int.Parse(userId);
-                expense.SharedWithUsers = _context.Users
-                    .Where(u => SelectedUserIds.Contains(u.Id))
-                    .ToList();
-
-                _context.Expenses.Add(expense);
-                _context.SaveChanges();
-                return RedirectToAction(nameof(Index));
+                // Re-populate filtered list so your own name doesn't reappear
+                PopulateHousematesExceptCurrent();
+                return View(expense);
             }
 
-            ViewBag.Tenants = _context.Users
-                .Where(u => u.Role == "Tenant")
-                .OrderBy(u => u.Name)
+            expense.PaidByUserId = int.Parse(userId);
+            expense.SharedWithUsers = _context.Users
+                .Where(u => shareWithUserIds.Contains(u.Id))
                 .ToList();
 
-            return View(expense);
+            _context.Expenses.Add(expense);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Expenses/Settle/5

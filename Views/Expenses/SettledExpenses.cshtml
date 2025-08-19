@@ -43,7 +43,7 @@
                     var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
 
                     <tr>
-                        <td>@expense.Date.ToShortDateString()</td>
+                        <td>@(expense.Date?.ToShortDateString())</td>
                         <td>@expense.Title</td>
                         <td>@("£" + expense.Amount.ToString("0.00"))</td>
                         <td>

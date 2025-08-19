@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Add New Expense";
-    var tenants = ViewBag.Tenants as List<SharedHousingApp.Models.User> ?? new();
+    var mates = ViewBag.Housemates as List<SharedHousingApp.Models.User> ?? new();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -21,18 +21,18 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Date" class="form-label"></label>
+        <label asp-for="Date" class="form-label">Date</label>
         <input asp-for="Date" class="form-control" type="date" />
-        <span asp-validation-for="Date" class="text-danger"></span>
+        <span asp-validation-for="Date" class="text-danger small"></span>
     </div>
 
     <div class="mb-3">
         <label class="form-label">Who shares this expense?</label>
-        @foreach (var tenant in tenants)
+        @foreach (var u in mates)
         {
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="SelectedUserIds" value="@tenant.Id" id="tenant_@tenant.Id" />
-                <label class="form-check-label" for="tenant_@tenant.Id">@tenant.Name</label>
+                <input class="form-check-input" type="checkbox" name="shareWithUserIds" value="@u.Id" id="share_@u.Id" />
+                <label class="form-check-label" for="share_@u.Id">@u.Name</label>
             </div>
         }
     </div>
