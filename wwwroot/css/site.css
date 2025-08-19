@@ -388,3 +388,10 @@ span.text-danger {
 .validation-summary-errors { 
   display: none; 
 }
+
+#deleteModal .modal-title,
+#deleteModal .modal-body,
+#deleteModal .modal-footer {
+  color: #000 !important;
+}
+

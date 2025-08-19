@@ -144,6 +144,7 @@ namespace SharedHousingApp.Controllers
         }
 
         // GET: Expenses/Delete/5
+        // Only allow delete if the expense is settled AND the current user is the payer.
         public IActionResult Delete(int id)
         {
             var expense = _context.Expenses
@@ -153,21 +154,38 @@ namespace SharedHousingApp.Controllers
 
             if (expense == null) return NotFound();
 
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null) return RedirectToAction("Login", "Users");
+
+            if (expense.PaidByUserId != int.Parse(userId) || !expense.IsSettled)
+                return Unauthorized();
+
             return View(expense); // Confirmation view
         }
 
         // POST: Expenses/Delete/5
+        // Only allow delete if the expense is settled AND the current user is the payer.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var expense = _context.Expenses.Find(id);
+            var userId = HttpContext.Session.GetString("UserId");
+            if (userId == null) return RedirectToAction("Login", "Users");
+
+            var expense = _context.Expenses
+                .Include(e => e.SharedWithUsers)
+                .FirstOrDefault(e => e.Id == id);
+
             if (expense == null) return NotFound();
+
+            if (expense.PaidByUserId != int.Parse(userId) || !expense.IsSettled)
+                return Unauthorized();
 
             _context.Expenses.Remove(expense);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Index));
+            // After deleting a settled expense, go back to SettledExpenses list
+            return RedirectToAction(nameof(SettledExpenses));
         }
     }
 }

@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Settled Expenses";
+    var currentUserId = Context.Session.GetString("UserId");
 }
 
 <div class="container py-3">
@@ -34,6 +35,7 @@
                         <th>Amount</th>
                         <th>Shared With</th>
                         <th>Each Person Owed</th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,6 +43,7 @@
                 {
                     var peopleCount = expense.SharedWithUsers.Count + 1;
                     var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
+                    var isOwner = currentUserId != null && expense.PaidByUserId == int.Parse(currentUserId);
 
                     <tr>
                         <td>@(expense.Date?.ToShortDateString())</td>
@@ -55,6 +58,14 @@
                             </ul>
                         </td>
                         <td>@("£" + splitAmount.ToString("0.00"))</td>
+                        <td class="text-center">
+                            @if (isOwner)
+                            {
+                                <form asp-action="Delete" asp-route-id="@expense.Id" method="post" style="display:inline">
+                                    <button type="submit" class="delete-x" title="Delete">❌</button>
+                                </form>
+                            }
+                        </td>
                     </tr>
                 }
                 </tbody>
@@ -68,7 +79,7 @@
       background: linear-gradient(to right, #4facfe, #8e44ad);
       color: white;
       border: none;
-      padding: 0.5rem
+      padding: 0.5rem;
       border-radius: 0.5rem;
       font-weight: 600;
       text-decoration: none;
@@ -77,4 +88,17 @@
       opacity: 0.9;
       color: white;
   }
+  .delete-x {
+    background: none;
+    border: none;
+    color: #dc3545;     /* Bootstrap red */
+    font-size: 1.2rem;  /* slightly smaller */
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.delete-x:hover {
+    color: #bb2d3b;     /* darker red on hover */
+}
 </style>
