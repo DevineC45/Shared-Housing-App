@@ -14,11 +14,17 @@ namespace SharedHousingApp.Controllers
             _context = context;
         }
 
-        // helper: populate housemates list excluding the current user
+        // --- helpers ---
+        private int? GetCurrentUserId()
+        {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (int.TryParse(userIdStr, out var id)) return id;
+            return null;
+        }
+
         private void PopulateHousematesExceptCurrent()
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            int me = string.IsNullOrEmpty(userId) ? -1 : int.Parse(userId);
+            var me = GetCurrentUserId() ?? -1;
 
             ViewBag.Housemates = _context.Users
                 .Where(u => u.Role == "Tenant" && u.Id != me)
@@ -44,10 +50,8 @@ namespace SharedHousingApp.Controllers
         // GET: Expenses/MyExpenses
         public IActionResult MyExpenses()
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null) return RedirectToAction("Login", "Users");
-
-            int id = int.Parse(userId);
+            var id = GetCurrentUserId();
+            if (id is null) return RedirectToAction("Login", "Users");
 
             var myExpenses = _context.Expenses
                 .Include(e => e.SharedWithUsers)
@@ -61,10 +65,8 @@ namespace SharedHousingApp.Controllers
         // GET: Expenses/SettledExpenses
         public IActionResult SettledExpenses()
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null) return RedirectToAction("Login", "Users");
-
-            int id = int.Parse(userId);
+            var id = GetCurrentUserId();
+            if (id is null) return RedirectToAction("Login", "Users");
 
             var settled = _context.Expenses
                 .Include(e => e.SharedWithUsers)
@@ -79,9 +81,9 @@ namespace SharedHousingApp.Controllers
         public IActionResult Create()
         {
             var role = HttpContext.Session.GetString("UserRole");
-            var userId = HttpContext.Session.GetString("UserId");
+            var userId = GetCurrentUserId();
 
-            if (role != "Tenant" || string.IsNullOrEmpty(userId))
+            if (role != "Tenant" || userId is null)
                 return RedirectToAction("Login", "Users");
 
             PopulateHousematesExceptCurrent();
@@ -93,17 +95,16 @@ namespace SharedHousingApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Expense expense, int[] shareWithUserIds)
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null) return RedirectToAction("Login", "Users");
+            var userId = GetCurrentUserId();
+            if (userId is null) return RedirectToAction("Login", "Users");
 
             if (!ModelState.IsValid)
             {
-                // Re-populate filtered list so your own name doesn't reappear
                 PopulateHousematesExceptCurrent();
                 return View(expense);
             }
 
-            expense.PaidByUserId = int.Parse(userId);
+            expense.PaidByUserId = userId.Value;
             expense.SharedWithUsers = _context.Users
                 .Where(u => shareWithUserIds.Contains(u.Id))
                 .ToList();
@@ -123,8 +124,10 @@ namespace SharedHousingApp.Controllers
 
             if (expense == null) return NotFound();
 
-            var userId = HttpContext.Session.GetString("UserId");
-            if (expense.PaidByUserId != int.Parse(userId!)) return Unauthorized();
+            var userId = GetCurrentUserId();
+            if (userId is null) return RedirectToAction("Login", "Users");
+
+            if (expense.PaidByUserId != userId.Value) return Forbid();
 
             return View(expense);
         }
@@ -134,8 +137,13 @@ namespace SharedHousingApp.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult SettleConfirmed(int id)
         {
+            var userId = GetCurrentUserId();
+            if (userId is null) return RedirectToAction("Login", "Users");
+
             var expense = _context.Expenses.Find(id);
             if (expense == null) return NotFound();
+
+            if (expense.PaidByUserId != userId.Value || expense.IsSettled) return Forbid();
 
             expense.IsSettled = true;
             _context.SaveChanges();
@@ -144,7 +152,7 @@ namespace SharedHousingApp.Controllers
         }
 
         // GET: Expenses/Delete/5
-        // Only allow delete if the expense is settled AND the current user is the payer.
+        // Allow payer to delete regardless of settlement status.
         public IActionResult Delete(int id)
         {
             var expense = _context.Expenses
@@ -154,23 +162,22 @@ namespace SharedHousingApp.Controllers
 
             if (expense == null) return NotFound();
 
-            var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null) return RedirectToAction("Login", "Users");
+            var userId = GetCurrentUserId();
+            if (userId is null) return RedirectToAction("Login", "Users");
 
-            if (expense.PaidByUserId != int.Parse(userId) || !expense.IsSettled)
-                return Unauthorized();
+            if (expense.PaidByUserId != userId.Value) return Forbid();
 
             return View(expense); // Confirmation view
         }
 
         // POST: Expenses/Delete/5
-        // Only allow delete if the expense is settled AND the current user is the payer.
+        // Allow payer to delete regardless of settlement status.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
-            var userId = HttpContext.Session.GetString("UserId");
-            if (userId == null) return RedirectToAction("Login", "Users");
+            var userId = GetCurrentUserId();
+            if (userId is null) return RedirectToAction("Login", "Users");
 
             var expense = _context.Expenses
                 .Include(e => e.SharedWithUsers)
@@ -178,14 +185,13 @@ namespace SharedHousingApp.Controllers
 
             if (expense == null) return NotFound();
 
-            if (expense.PaidByUserId != int.Parse(userId) || !expense.IsSettled)
-                return Unauthorized();
+            if (expense.PaidByUserId != userId.Value) return Forbid();
 
             _context.Expenses.Remove(expense);
             _context.SaveChanges();
 
-            // After deleting a settled expense, go back to SettledExpenses list
-            return RedirectToAction(nameof(SettledExpenses));
+            // Deleting from current list → back to Index
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -35,9 +35,29 @@
         <span asp-validation-for="Role" class="text-light fw-bold mt-1 d-block"></span>
     </div>
 
-    <button type="submit" class="btn btn-success">Register</button>
+    <!-- Consent -->
+    <div class="form-check my-3">
+        <input class="form-check-input" type="checkbox" id="consentCheckbox" name="Consent" value="true" required>
+        <label class="form-check-label" for="consentCheckbox">
+            I consent to my data being used in accordance with the
+            <a asp-controller="Home" asp-action="Privacy" target="_blank">Privacy Policy</a>.
+        </label>
+        <!-- Server-side error placeholder (since Consent isn't on the model) -->
+        <span class="text-light fw-bold mt-1 d-block" data-valmsg-for="Consent" data-valmsg-replace="true"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success" id="registerBtn" disabled>Register</button>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            const cb = document.getElementById('consentCheckbox');
+            const btn = document.getElementById('registerBtn');
+            const toggle = () => { btn.disabled = !cb.checked; };
+            toggle(); // initial state
+            cb.addEventListener('change', toggle);
+        })();
+    </script>
 }
