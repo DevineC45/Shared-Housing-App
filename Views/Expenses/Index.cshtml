@@ -9,8 +9,8 @@
 <h1 class="text-center mb-4">Expenses Hub</h1>
 
 <div class="d-flex justify-content-center mb-4 gap-3 flex-wrap">
-    <a class="btn btn-success btn-lg" asp-action="Create">Add New Expense</a>
-    <a class="btn btn-info btn-lg" asp-action="MyExpenses">View My Expenses</a>
+    <a class="btn btn-success w-100 w-sm-auto" asp-action="Create">Add New Expense</a>
+    <a class="btn btn-info w-100 w-sm-auto" asp-action="MyExpenses">View My Expenses</a>
 </div>
 
 @if (!Model.Any())
@@ -19,7 +19,61 @@
 }
 else
 {
-    <div class="table-responsive">
+    <!-- MOBILE: card list (xs only) -->
+    <div class="d-sm-none">
+        <div class="d-flex flex-column gap-2">
+            @foreach (var expense in Model)
+            {
+                var isOwner = currentUserId.HasValue && expense.PaidByUserId == currentUserId.Value;
+                var canDelete = isOwner;
+
+                <div class="card bg-dark border-secondary text-light">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <h6 class="mb-1 text-break">@expense.Title</h6>
+                            <span class="badge bg-secondary">@expense.Date?.ToShortDateString()</span>
+                        </div>
+
+                        <!-- Make "Paid by" readable on dark cards -->
+                        <div class="label-dim small mb-1">Paid by @expense.PaidByUser?.Name</div>
+                        <div class="fw-semibold mb-2">£@expense.Amount.ToString("0.00")</div>
+
+                        <div class="mb-3">
+                            <div class="label-dim small mb-1">Shared With</div>
+                            @if (expense.SharedWithUsers.Any())
+                            {
+                                <ul class="mb-0 ps-3">
+                                    @foreach (var user in expense.SharedWithUsers)
+                                    {
+                                        <li>@user.Name</li>
+                                    }
+                                </ul>
+                            }
+                            else { <em>—</em> }
+                        </div>
+
+                        <div class="d-grid">
+                            @if (canDelete)
+                            {
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"
+                                        data-id="@expense.Id"
+                                        data-name="@expense.Title"
+                                        data-type="expense">
+                                    Delete
+                                </button>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- DESKTOP/TABLET: table (sm and up) -->
+    <div class="table-responsive d-none d-sm-block">
         <table class="table table-hover table-dark table-striped align-middle mb-0 rounded-3 overflow-hidden">
             <thead>
                 <tr>
@@ -28,20 +82,20 @@ else
                     <th>Paid By</th>
                     <th>Amount</th>
                     <th>Shared With</th>
-                    <th>Actions</th>
+                    <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var expense in Model)
                 {
                     var isOwner = currentUserId.HasValue && expense.PaidByUserId == currentUserId.Value;
-                    var canDelete = isOwner; // allow payer to delete even if not settled
+                    var canDelete = isOwner;
 
                     <tr>
-                        <td>@(expense.Date?.ToShortDateString())</td>
-                        <td>@expense.Title</td>
-                        <td>@expense.PaidByUser?.Name</td>
-                        <td>£@expense.Amount.ToString("0.00")</td>
+                        <td class="text-nowrap">@expense.Date?.ToShortDateString()</td>
+                        <td class="text-break">@expense.Title</td>
+                        <td class="text-break">@expense.PaidByUser?.Name</td>
+                        <td class="text-nowrap">£@expense.Amount.ToString("0.00")</td>
                         <td>
                             @if (expense.SharedWithUsers.Any())
                             {
@@ -52,24 +106,23 @@ else
                                     }
                                 </ul>
                             }
-                            else
-                            {
-                                <em>No one selected</em>
-                            }
+                            else { <em>No one selected</em> }
                         </td>
-                        <td>
-                            @if (canDelete)
-                            {
-                                <button type="button"
-                                        class="btn btn-danger btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="@expense.Id"
-                                        data-name="@expense.Title"
-                                        data-type="expense">
-                                    Delete
-                                </button>
-                            }
+                        <td class="text-end">
+                            <div class="d-flex flex-column flex-sm-row gap-2 justify-content-sm-end">
+                                @if (canDelete)
+                                {
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-id="@expense.Id"
+                                            data-name="@expense.Title"
+                                            data-type="expense">
+                                        Delete
+                                    </button>
+                                }
+                            </div>
                         </td>
                     </tr>
                 }
@@ -102,20 +155,25 @@ else
 </div>
 
 @section Scripts {
-    <script>
-        const deleteModal = document.getElementById('deleteModal');
-        deleteModal.addEventListener('show.bs.modal', event => {
-            const button = event.relatedTarget;
-            const id = button.getAttribute('data-id');
-            const name = button.getAttribute('data-name');
-            const type = button.getAttribute('data-type'); // "expense"
+<script>
+    const deleteModal = document.getElementById('deleteModal');
+    deleteModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const name = button.getAttribute('data-name');
+        const type = button.getAttribute('data-type'); // "expense"
 
-            document.getElementById('deleteItemName').textContent = `"${name}"`;
-            document.getElementById('deleteItemId').value = id;
+        document.getElementById('deleteItemName').textContent = `"${name}"`;
+        document.getElementById('deleteItemId').value = id;
 
-            // e.g. /Expenses/Delete
-            document.getElementById('deleteForm').action =
-                `/${type.charAt(0).toUpperCase() + type.slice(1)}s/Delete`;
-        });
-    </script>
+        // e.g. /Expenses/Delete
+        document.getElementById('deleteForm').action =
+            `/${type.charAt(0).toUpperCase() + type.slice(1)}s/Delete`;
+    });
+</script>
 }
+
+<style>
+  /* readable labels on dark cards */
+  .label-dim { color: rgba(255,255,255,.75); font-weight: 500; letter-spacing: .02em; }
+</style>

@@ -15,140 +15,164 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Homigo</title>
 
+    <!-- Styles -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/SharedHousingApp.styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet" />
+
+    <!-- PWA: manifest + theme color + icons -->
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="theme-color" content="#121826" />
+    <meta name="msapplication-TileColor" content="#121826" />
+
+    <!-- Favicons / App icons -->
+    <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/icons/icon-512.png">
+
+    <!-- iOS (Safari) PWA hints -->
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
+
 <body class="bg-dark text-light">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm py-3">
-            <div class="container d-flex justify-content-between align-items-center px-4">
+<header>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom shadow-sm py-2">
+        <div class="container px-4">
 
-                <!-- Left: Logo + Brand -->
-                <a class="navbar-brand d-flex align-items-center fw-bold text-light me-4"
-                   asp-controller="Home" asp-action="Index">
-                    <img src="~/img/homigo.png" alt="Homigo" class="brand-logo me-2" height="28" />
-                    <span>Homigo</span>
-                </a>
+            <!-- Brand -->
+            <a class="navbar-brand d-flex align-items-center fw-bold text-light"
+               asp-controller="Home" asp-action="Index">
+                <!-- Match the real file path & case -->
+                <img src="~/tiles/Homigo.png" alt="" class="me-2" height="22" />
+                <span>Homigo</span>
+            </a>
 
-                <!-- Center: Navigation Links -->
-                <div class="collapse navbar-collapse justify-content-center">
-                    <ul class="navbar-nav gap-4">
+            <!-- Right mini-bar: Welcome text (outside menu) + Hamburger -->
+            <div class="d-flex align-items-center ms-auto">
+                @if (userId != null)
+                {
+                    <span class="navbar-text me-2 d-inline-block text-truncate"
+                          style="max-width:40vw;">Welcome, @userRole!</span>
+                }
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#mainNav" aria-controls="mainNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
 
-                        @* LANDING PAGE NAV *@
-                        @if ((ViewData["BodyClass"]?.ToString() ?? "") == "landing-page")
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="About">About Us</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="Features">Features</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="Contact">Contact</a>
-                            </li>
-                        }
-                        else
-                        {
-                            @* APP NAV (when not on landing page) *@
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-controller="Home" asp-action="Dashboard">Home</a>
-                            </li>
+            <!-- Collapsible area: ALL nav links inside here -->
+            <div class="collapse navbar-collapse" id="mainNav">
 
-                            @if (userRole == "Tenant")
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="choresDropdown" role="button" data-bs-toggle="dropdown">
-                                        Chores
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="Chores" asp-action="Index">All Chores</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Chores" asp-action="MyChores">My Chores</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Chores" asp-action="Create">Add New Chore</a></li>
-                                    </ul>
-                                </li>
+                <!-- Center links -->
+                <ul class="navbar-nav mx-lg-auto my-2 my-lg-0 gap-2 gap-lg-4">
 
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="expensesDropdown" role="button" data-bs-toggle="dropdown">
-                                        Expenses
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Index">All Expenses</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Expenses" asp-action="MyExpenses">My Expenses</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Create">Add New Expense</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-controller="Calendar" asp-action="Index">Calendar</a>
-                                </li>
-                            }
-                            else if (userRole == "Landlord")
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="announcementsDropdown" role="button" data-bs-toggle="dropdown">
-                                        Announcements
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Index">View Announcements</a></li>
-                                        <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Create">Post New Announcement</a></li>
-                                    </ul>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link text-light" asp-controller="Calendar" asp-action="Index">Manage Calendar</a>
-                                </li>
-                            }
-                        }
-                    </ul>
-                </div>
-
-                <!-- Right: Login/Logout -->
-                <ul class="navbar-nav ms-4 d-flex align-items-center gap-3">
-                    @if (userId == null)
+                    @* LANDING PAGE NAV *@
+                    @if ((ViewData["BodyClass"]?.ToString() ?? "") == "landing-page")
                     {
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Users" asp-action="Login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Users" asp-action="Register">Register</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Features">Features</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Contact">Contact</a></li>
                     }
                     else
                     {
-                        <li class="nav-item">
-                            <span class="nav-link text-light">Welcome, @userRole!</span>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-controller="Users" asp-action="Logout">Logout</a>
-                        </li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Dashboard">Home</a></li>
+
+                        @if (userRole == "Tenant")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="choresDropdown" role="button" data-bs-toggle="dropdown">Chores</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Chores" asp-action="Index">All Chores</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Chores" asp-action="MyChores">My Chores</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Chores" asp-action="Create">Add New Chore</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="expensesDropdown" role="button" data-bs-toggle="dropdown">Expenses</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Index">All Expenses</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Expenses" asp-action="MyExpenses">My Expenses</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Expenses" asp-action="Create">Add New Expense</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item"><a class="nav-link" asp-controller="Calendar" asp-action="Index">Calendar</a></li>
+                        }
+                        else if (userRole == "Landlord")
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="announcementsDropdown" role="button" data-bs-toggle="dropdown">Announcements</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Index">View Announcements</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Announcements" asp-action="Create">Post New Announcement</a></li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item"><a class="nav-link" asp-controller="Calendar" asp-action="Index">Calendar</a></li>
+                        }
                     }
                 </ul>
+
+                <!-- Right: auth (Logout inside menu on mobile; right-aligned on desktop) -->
+                <ul class="navbar-nav ms-lg-auto my-2 my-lg-0 gap-2">
+                    @if (userId == null)
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Users" asp-action="Login">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Users" asp-action="Register">Register</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link" asp-controller="Users" asp-action="Logout">Logout</a></li>
+                    }
+                </ul>
+
             </div>
-        </nav>
-    </header>
-
-    <main class="@(isPublicMarketingPage ? "" : "page-container") @(ViewData["BodyClass"] ?? "")">
-        @RenderBody()
-    </main>
-
-    <footer class="border-top footer text-muted mt-4 bg-dark text-center text-light py-3">
-        <div class="container">
-            &copy; 2025 - Homigo - <a class="text-light" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
-    </footer>
+    </nav>
+</header>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+<main class="@(isPublicMarketingPage ? "" : "page-container") @(ViewData["BodyClass"] ?? "")">
+    @RenderBody()
+</main>
 
-    <style>
-        .logo-placeholder { background-color: #444; }
-        .navbar-nav .nav-link { padding-left: 0.75rem; padding-right: 0.75rem; }
-        .navbar-nav.gap-4 > .nav-item { margin-left: 0.75rem; margin-right: 0.75rem; }
-    </style>
+<footer class="border-top footer text-muted mt-4 bg-dark text-center text-light py-3">
+    <div class="container">
+        &copy; 2025 - Homigo - <a class="text-light" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+</footer>
+
+<!-- Scripts -->
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/js/site.js" asp-append-version="true"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+@await RenderSectionAsync("Scripts", required: false)
+
+<!-- PWA: register the service worker -->
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/service-worker.js', { scope: '/' })
+                .then(reg => console.log('Service worker registered with scope:', reg.scope))
+                .catch(err => console.error('Service worker registration failed:', err));
+        });
+    }
+</script>
+
+<style>
+    /* Navbar tweaks */
+    .navbar-nav .nav-link { padding-left: .75rem; padding-right: .75rem; }
+
+    @@media (max-width: 991.98px){
+        .navbar { padding-top: .5rem; padding-bottom: .5rem; }
+        .navbar .dropdown-menu { position: static; float: none; } /* dropdowns stack inside collapse */
+        .navbar-text { font-size: .95rem; } /* welcome label size */
+    }
+</style>
 </body>
 </html>

@@ -1,27 +1,28 @@
 using SharedHousingApp.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// MVC
 builder.Services.AddControllersWithViews();
 
-// Add EF Core with SQLite
+// EF Core (SQLite)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ✅ Proper session setup
-builder.Services.AddDistributedMemoryCache(); // Required for session to work
+// Session
+builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // adjust as needed
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true; // ✅ crucial for session in ASP.NET Core
+    options.Cookie.IsEssential = true;
 });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Error handling + HSTS
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -29,16 +30,31 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+// --- Static files (PWA-friendly) ---
+var provider = new FileExtensionContentTypeProvider();
+// Ensure manifest has the correct MIME type
+provider.Mappings[".webmanifest"] = "application/manifest+json";
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider,
+    // Make sure service worker updates aren’t cached by the browser
+    OnPrepareResponse = ctx =>
+    {
+        if (ctx.File.Name == "service-worker.js")
+        {
+            ctx.Context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0";
+        }
+    }
+});
+// -----------------------------------
 
 app.UseRouting();
 
-// ✅ Enable session before anything that might use it
 app.UseSession();
-
 app.UseAuthorization();
 
-// Configure controller route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");

@@ -39,26 +39,29 @@
                     @foreach (var chore in Model)
                     {
                         <tr>
-                            <td>@chore.Title</td>
-                            <td>@chore.AssignedToUser?.Name</td>
+                            <td class="text-break">@chore.Title</td>
+                            <td class="text-break">@chore.AssignedToUser?.Name</td>
                             <td class="text-end">
-                                <form asp-action="Complete" method="post" class="d-inline">
-                                    <input type="hidden" name="id" value="@chore.Id" />
-                                    <button class="btn btn-success btn-sm">Done &amp; Rotate</button>
-                                </form>
+                                <!-- stack on phones, row on sm+ -->
+                                <div class="d-flex flex-column flex-sm-row gap-2 justify-content-sm-end">
+                                    <form asp-action="Complete" method="post" class="d-inline">
+                                        <input type="hidden" name="id" value="@chore.Id" />
+                                        <button class="btn btn-success btn-sm">Done &amp; Rotate</button>
+                                    </form>
 
-                                <a class="btn btn-primary btn-sm"
-                                   asp-action="Edit" asp-route-id="@chore.Id">Edit</a>
+                                    <a class="btn btn-primary btn-sm"
+                                       asp-action="Edit" asp-route-id="@chore.Id">Edit</a>
 
-                                <button type="button"
-                                        class="btn btn-danger btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal"
-                                        data-id="@chore.Id"
-                                        data-name="@chore.Title"
-                                        data-type="chore">
-                                    Delete
-                                </button>
+                                    <button type="button"
+                                            class="btn btn-danger btn-sm"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal"
+                                            data-id="@chore.Id"
+                                            data-name="@chore.Title"
+                                            data-type="chore">
+                                        Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     }

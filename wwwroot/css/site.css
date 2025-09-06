@@ -395,3 +395,26 @@ span.text-danger {
   color: #000 !important;
 }
 
+/* Navbar mobile tweaks */
+@media (max-width: 991.98px){
+  .navbar { padding-top:.5rem; padding-bottom:.5rem; }
+  .navbar .dropdown-menu { position: static; float: none; } /* dropdowns inside collapse */
+}
+
+/* Table readability */
+.table { font-size: .95rem; }
+.table th, .table td { vertical-align: middle; }
+
+/* Phone tweaks for small buttons */
+@media (max-width: 576px){
+  .btn-sm { padding: .35rem .6rem; font-size: .85rem; border-radius: .6rem; }
+  .page-container { padding: 1rem; }
+}
+
+/* Useful utilities used above */
+.text-nowrap { white-space: nowrap; }
+.text-break { word-break: break-word; }
+
+/* Labels that read well on dark cards */
+.label-dim { color: rgba(255,255,255,.75); font-weight: 500; letter-spacing: .02em; }
+

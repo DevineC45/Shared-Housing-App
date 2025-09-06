@@ -8,15 +8,11 @@
 <h1 class="text-center mb-4">My Expenses</h1>
 
 <div class="d-flex justify-content-start mb-3 gap-2 flex-wrap">
-    <a class="btn btn-gradient btn-lg"
-       asp-controller="Expenses" asp-action="Index">
-        All Expenses
-    </a>
+    <a class="btn btn-gradient w-100 w-sm-auto"
+       asp-controller="Expenses" asp-action="Index">All Expenses</a>
 
-    <a class="btn btn-gradient btn-lg"
-       asp-controller="Expenses" asp-action="SettledExpenses">
-        View Settled Expenses
-    </a>
+    <a class="btn btn-gradient w-100 w-sm-auto"
+       asp-controller="Expenses" asp-action="SettledExpenses">View Settled Expenses</a>
 </div>
 
 @if (!Model.Any())
@@ -25,7 +21,62 @@
 }
 else
 {
-    <div class="table-responsive">
+    <!-- MOBILE: card list -->
+    <div class="d-sm-none">
+        <div class="d-flex flex-column gap-2">
+            @foreach (var expense in Model)
+            {
+                var peopleCount = expense.SharedWithUsers.Count + 1; // Include the payer
+                var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
+
+                <div class="card bg-dark border-secondary text-light">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <h6 class="mb-1 text-break">@expense.Title</h6>
+                      <span class="badge bg-secondary">@expense.Date?.ToShortDateString()</span>
+                    </div>
+
+                    <div class="fw-semibold mb-2">£@expense.Amount.ToString("0.00")</div>
+
+                    <!-- Labels shown clearly on dark background -->
+                    <div class="row g-2 mb-2">
+                      <div class="col-7">
+                        <div class="label-dim small mb-1">Shared With</div>
+                        @if (expense.SharedWithUsers.Any())
+                        {
+                          <ul class="mb-0 ps-3">
+                            @foreach (var user in expense.SharedWithUsers) { <li>@user.Name</li> }
+                          </ul>
+                        }
+                        else { <em>—</em> }
+                      </div>
+
+                      <div class="col-5 text-end">
+                        <div class="label-dim small mb-1">Each Person Owes</div>
+                        <span class="badge bg-info text-dark">£@splitAmount.ToString("0.00")</span>
+                      </div>
+                    </div>
+
+                    <div class="d-grid">
+                      @if (expense.PaidByUserId.ToString() == currentUserId && !expense.IsSettled)
+                      {
+                        <a asp-action="Settle" asp-route-id="@expense.Id" class="btn btn-gradient btn-sm">
+                          Mark as Settled
+                        </a>
+                      }
+                      else if (expense.IsSettled)
+                      {
+                        <span class="badge bg-success">Settled</span>
+                      }
+                    </div>
+                  </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- DESKTOP/TABLET: table -->
+    <div class="table-responsive d-none d-sm-block">
         <table class="table table-hover table-dark table-striped align-middle mb-0 rounded-3 overflow-hidden">
             <thead>
                 <tr>
@@ -34,7 +85,7 @@ else
                     <th>Amount</th>
                     <th>Shared With</th>
                     <th>Each Person Owes</th>
-                    <th>Actions</th>
+                    <th class="text-end">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -44,38 +95,35 @@ else
                     var splitAmount = peopleCount > 0 ? expense.Amount / peopleCount : 0;
 
                     <tr>
-                        <td>@(expense.Date?.ToShortDateString())</td>
-                        <td>@expense.Title</td>
-                        <td>£@expense.Amount.ToString("0.00")</td>
+                        <td class="text-nowrap">@expense.Date?.ToShortDateString()</td>
+                        <td class="text-break">@expense.Title</td>
+                        <td class="text-nowrap">£@expense.Amount.ToString("0.00")</td>
                         <td>
                             @if (expense.SharedWithUsers.Any())
                             {
                                 <ul class="mb-0">
                                     @foreach (var user in expense.SharedWithUsers)
-                                    {
-                                        <li>@user.Name</li>
-                                    }
+                                    { <li>@user.Name</li> }
                                 </ul>
                             }
-                            else
-                            {
-                                <em>No one selected</em>
-                            }
+                            else { <em>No one selected</em> }
                         </td>
-                        <td>£@splitAmount.ToString("0.00")</td>
-                        <td>
-                            @if (expense.PaidByUserId.ToString() == currentUserId && !expense.IsSettled)
-                            {
-                                <a asp-action="Settle"
-                                   asp-route-id="@expense.Id"
-                                   class="btn btn-gradient btn-sm">
-                                    Mark as Settled
-                                </a>
-                            }
-                            else if (expense.IsSettled)
-                            {
-                                <span class="badge bg-success">Settled</span>
-                            }
+                        <td class="text-nowrap">£@splitAmount.ToString("0.00")</td>
+                        <td class="text-end">
+                            <div class="d-flex flex-column flex-sm-row gap-2 justify-content-sm-end">
+                                @if (expense.PaidByUserId.ToString() == currentUserId && !expense.IsSettled)
+                                {
+                                    <a asp-action="Settle"
+                                       asp-route-id="@expense.Id"
+                                       class="btn btn-gradient btn-sm">
+                                        Mark as Settled
+                                    </a>
+                                }
+                                else if (expense.IsSettled)
+                                {
+                                    <span class="badge bg-success align-self-sm-center">Settled</span>
+                                }
+                            </div>
                         </td>
                     </tr>
                 }
@@ -94,8 +142,8 @@ else
       font-weight: 600;
       text-decoration: none;
   }
-  .btn-gradient:hover {
-      opacity: 0.9;
-      color: white;
-  }
+  .btn-gradient:hover { opacity: 0.9; color: white; }
+
+  /* readable labels on dark cards */
+  .label-dim { color: rgba(255,255,255,.75); font-weight: 500; letter-spacing: .02em; }
 </style>
