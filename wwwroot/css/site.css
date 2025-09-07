@@ -418,3 +418,10 @@ span.text-danger {
 /* Labels that read well on dark cards */
 .label-dim { color: rgba(255,255,255,.75); font-weight: 500; letter-spacing: .02em; }
 
+/* Center the footer content hard */
+footer.footer .container {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  text-align: center !important;
+}
