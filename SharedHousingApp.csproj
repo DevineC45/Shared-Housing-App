@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Password hashing library -->
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+
+    <!-- ✅ Core EF package (gives you DbContext, DbSet<>, SaveChanges, etc.) -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.7" />
+
+    <!-- EF Core Design-time tools (for migrations, etc.) -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+
+    <!-- SQLite provider for EF Core -->
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.7" />
   </ItemGroup>
 

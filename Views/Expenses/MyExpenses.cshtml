@@ -21,7 +21,6 @@
 }
 else
 {
-    <!-- MOBILE: card list -->
     <div class="d-sm-none">
         <div class="d-flex flex-column gap-2">
             @foreach (var expense in Model)
@@ -38,7 +37,6 @@ else
 
                     <div class="fw-semibold mb-2">£@expense.Amount.ToString("0.00")</div>
 
-                    <!-- Labels shown clearly on dark background -->
                     <div class="row g-2 mb-2">
                       <div class="col-7">
                         <div class="label-dim small mb-1">Shared With</div>
@@ -75,7 +73,6 @@ else
         </div>
     </div>
 
-    <!-- DESKTOP/TABLET: table -->
     <div class="table-responsive d-none d-sm-block">
         <table class="table table-hover table-dark table-striped align-middle mb-0 rounded-3 overflow-hidden">
             <thead>

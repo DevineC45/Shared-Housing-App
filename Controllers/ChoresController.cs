@@ -50,22 +50,6 @@ namespace SharedHousingApp.Controllers
             return View(chores);
         }
 
-        // GET: Chores/Schedule
-        public IActionResult Schedule()
-        {
-            var role = HttpContext.Session.GetString("UserRole");
-            if (string.IsNullOrEmpty(role))
-            {
-                return RedirectToAction("Login", "Users");
-            }
-
-            var chores = _context.Chores
-                .Include(c => c.AssignedToUser)
-                .ToList();
-
-            return View(chores);
-        }
-
         // GET: Chores/Create
         public IActionResult Create()
         {

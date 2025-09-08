@@ -13,7 +13,7 @@ namespace SharedHousingApp.Models
 
         public bool IsComplete { get; set; } = false;
 
-        public bool RepeatWeekly { get; set; } = false;
+        //public bool RepeatWeekly { get; set; } = false;
 
         public User? AssignedToUser { get; set; }
     }
