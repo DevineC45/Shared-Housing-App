@@ -14,7 +14,7 @@ namespace SharedHousingApp.Controllers
             _context = context;
         }
 
-        // GET: /Announcements
+        // Displays all announcements, ordered by most recent first
         public IActionResult Index()
         {
             var announcements = _context.Announcements
@@ -25,7 +25,7 @@ namespace SharedHousingApp.Controllers
             return View(announcements);
         }
 
-        // GET: /Announcements/Create
+        // Shows the Create Announcement form (Landlord only)
         public IActionResult Create()
         {
             if (HttpContext.Session.GetString("UserRole") != "Landlord")
@@ -34,7 +34,7 @@ namespace SharedHousingApp.Controllers
             return View();
         }
 
-        // POST: /Announcements/Create
+        // Handles form submission for creating a new announcement (Landlord only)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Announcement announcement)
@@ -53,7 +53,7 @@ namespace SharedHousingApp.Controllers
             return View(announcement);
         }
 
-        // GET: /Announcements/Edit/5
+        // Shows the Edit Announcement form for a specific announcement (Landlord only)
         public IActionResult Edit(int id)
         {
             if (HttpContext.Session.GetString("UserRole") != "Landlord")
@@ -65,7 +65,7 @@ namespace SharedHousingApp.Controllers
             return View(announcement);
         }
 
-        // POST: /Announcements/Edit/5
+        // Handles form submission for editing an existing announcement (Landlord only)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Announcement announcement)
@@ -84,7 +84,7 @@ namespace SharedHousingApp.Controllers
             return View(announcement);
         }
 
-        // GET: /Announcements/Delete/5
+        // Shows the Delete confirmation page for a specific announcement (Landlord only)
         public IActionResult Delete(int id)
         {
             if (HttpContext.Session.GetString("UserRole") != "Landlord")
@@ -96,7 +96,7 @@ namespace SharedHousingApp.Controllers
             return View(announcement);
         }
 
-        // POST: /Announcements/Delete/5
+        // Handles the deletion of an announcement after confirmation (Landlord only)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

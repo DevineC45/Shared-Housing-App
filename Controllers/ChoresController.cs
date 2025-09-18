@@ -14,7 +14,7 @@ namespace SharedHousingApp.Controllers
             _context = context;
         }
 
-        // GET: Chores
+        // Displays all chores (Tenant only)
         public IActionResult Index()
         {
             var role = HttpContext.Session.GetString("UserRole");
@@ -30,6 +30,7 @@ namespace SharedHousingApp.Controllers
             return View(chores);
         }
 
+        // Displays chores assigned specifically to the logged-in tenant
         public IActionResult MyChores()
         {
             var userId = HttpContext.Session.GetString("UserId");
@@ -50,7 +51,7 @@ namespace SharedHousingApp.Controllers
             return View(chores);
         }
 
-        // GET: Chores/Create
+        // Shows the Create Chore form (Tenant only)
         public IActionResult Create()
         {
             var role = HttpContext.Session.GetString("UserRole");
@@ -66,7 +67,7 @@ namespace SharedHousingApp.Controllers
             return View();
         }
 
-        // POST: Chores/Create
+        // Handles form submission for creating a new chore
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Chore chore)
@@ -84,8 +85,8 @@ namespace SharedHousingApp.Controllers
                     return View(chore);
                 }
 
-                // default values for a fresh chore
-                chore.IsComplete = false; // important
+                // Default values for a fresh chore
+                chore.IsComplete = false; 
                 if (chore.AssignedToUserId == 0)
                     chore.AssignedToUserId = firstTenant.Id;
 
@@ -97,7 +98,7 @@ namespace SharedHousingApp.Controllers
             return View(chore);
         }
 
-        // GET: Chores/Edit/5
+        // Shows the Edit Chore form for a specific chore (Tenant only)
         public IActionResult Edit(int id)
         {
             var role = HttpContext.Session.GetString("UserRole");
@@ -116,7 +117,7 @@ namespace SharedHousingApp.Controllers
             return View(chore);
         }
 
-        // POST: Chores/Edit/5  (safe, field-level update)
+        // Handles form submission for editing a chore (safe field-level update)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id,Title,AssignedToUserId")] Chore input)
@@ -156,7 +157,7 @@ namespace SharedHousingApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // POST: Chores/Complete/5
+        // Marks a chore as complete and rotates it to the next tenant
         [HttpPost]
         public IActionResult Complete(int id)
         {
@@ -192,7 +193,7 @@ namespace SharedHousingApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Chores/Delete/5
+        // Shows the Delete confirmation page for a chore
         public IActionResult Delete(int id)
         {
             var chore = _context.Chores
@@ -204,7 +205,7 @@ namespace SharedHousingApp.Controllers
             return View(chore); // Razor confirmation page
         }
 
-        // POST: Chores/Delete/5
+        // Handles deletion of a chore after confirmation
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

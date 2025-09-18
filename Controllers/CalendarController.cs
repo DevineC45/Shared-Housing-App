@@ -14,7 +14,7 @@ namespace SharedHousingApp.Controllers
             _context = context;
         }
 
-        // GET: /Calendar
+        // Displays all calendar events ordered by date
         public IActionResult Index()
         {
             var events = _context.CalendarEvents
@@ -24,7 +24,7 @@ namespace SharedHousingApp.Controllers
             return View(events);
         }
 
-        // GET: /Calendar/Create?date=2025-08-12
+        // Shows the Create Event form (date can be pre-filled via query string)
         public IActionResult Create(DateTime? date)
         {
             if (HttpContext.Session.GetString("UserId") == null)
@@ -39,7 +39,7 @@ namespace SharedHousingApp.Controllers
             return View(model);
         }
 
-        // POST: /Calendar/Create
+        // Handles form submission for creating a new calendar event
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CalendarEvent calendarEvent)
@@ -76,7 +76,7 @@ namespace SharedHousingApp.Controllers
             return RedirectToAction("Index");
         }
 
-        // ✅ GET: /Calendar/GetEvents
+        // Returns all events in JSON format (used by frontend calendar)
         [HttpGet]
         public JsonResult GetEvents()
         {
@@ -84,7 +84,7 @@ namespace SharedHousingApp.Controllers
                 .Select(e => new
                 {
                     id = e.Id,
-                    // ✅ Only title + emoji, no "- Name"
+                    // Only title + emoji, no "- Name"
                     title = e.Title,
                     start = e.Date.ToString("yyyy-MM-dd"),
                     description = e.Description,
@@ -95,7 +95,7 @@ namespace SharedHousingApp.Controllers
             return Json(events);
         }
 
-        // GET: /Calendar/Edit/5
+        // Shows the Edit Event form (only creator can edit)
         public IActionResult Edit(int id)
         {
             var calendarEvent = _context.CalendarEvents.Find(id);
@@ -107,7 +107,7 @@ namespace SharedHousingApp.Controllers
             return View(calendarEvent);
         }
 
-        // POST: /Calendar/Edit/5
+        // Handles form submission for editing an event (only creator can edit)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(CalendarEvent calendarEvent)
@@ -127,7 +127,7 @@ namespace SharedHousingApp.Controllers
             return View(calendarEvent);
         }
 
-        // GET: /Calendar/Delete/5
+        // Shows the Delete confirmation page for an event (only creator can delete)
         public IActionResult Delete(int id)
         {
             var calendarEvent = _context.CalendarEvents.Find(id);
@@ -139,7 +139,7 @@ namespace SharedHousingApp.Controllers
             return View(calendarEvent);
         }
 
-        // POST: /Calendar/Delete/5
+        // Handles deletion of an event after confirmation (only creator can delete)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)

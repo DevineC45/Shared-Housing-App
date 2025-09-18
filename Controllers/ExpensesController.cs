@@ -15,6 +15,8 @@ namespace SharedHousingApp.Controllers
         }
 
         // --- helpers ---
+
+        // Gets the current logged-in user's ID from session
         private int? GetCurrentUserId()
         {
             var userIdStr = HttpContext.Session.GetString("UserId");
@@ -22,6 +24,7 @@ namespace SharedHousingApp.Controllers
             return null;
         }
 
+        // Populates ViewBag.Housemates with tenants except the current user
         private void PopulateHousematesExceptCurrent()
         {
             var me = GetCurrentUserId() ?? -1;
@@ -32,7 +35,7 @@ namespace SharedHousingApp.Controllers
                 .ToList();
         }
 
-        // GET: Expenses
+        // Displays all unsettled expenses
         public IActionResult Index()
         {
             var role = HttpContext.Session.GetString("UserRole");
@@ -47,7 +50,7 @@ namespace SharedHousingApp.Controllers
             return View(expenses);
         }
 
-        // GET: Expenses/MyExpenses
+        // Displays unsettled expenses created by the logged-in user
         public IActionResult MyExpenses()
         {
             var id = GetCurrentUserId();
@@ -62,7 +65,7 @@ namespace SharedHousingApp.Controllers
             return View(myExpenses);
         }
 
-        // GET: Expenses/SettledExpenses
+        // Displays settled expenses created by the logged-in user
         public IActionResult SettledExpenses()
         {
             var id = GetCurrentUserId();
@@ -77,7 +80,7 @@ namespace SharedHousingApp.Controllers
             return View(settled);
         }
 
-        // GET: Expenses/Create
+        // Shows the Create Expense form
         public IActionResult Create()
         {
             var role = HttpContext.Session.GetString("UserRole");
@@ -90,7 +93,7 @@ namespace SharedHousingApp.Controllers
             return View();
         }
 
-        // POST: Expenses/Create
+        // Handles form submission for creating a new expense
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Expense expense, int[] shareWithUserIds)
@@ -114,7 +117,7 @@ namespace SharedHousingApp.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // GET: Expenses/Settle/5
+        // Shows the Settle Expense confirmation page (only payer can settle)
         public IActionResult Settle(int id)
         {
             var expense = _context.Expenses
@@ -132,7 +135,7 @@ namespace SharedHousingApp.Controllers
             return View(expense);
         }
 
-        // POST: Expenses/Settle/5
+        // Handles expense settlement (only payer can settle)
         [HttpPost, ActionName("Settle")]
         [ValidateAntiForgeryToken]
         public IActionResult SettleConfirmed(int id)
@@ -151,7 +154,7 @@ namespace SharedHousingApp.Controllers
             return RedirectToAction(nameof(MyExpenses));
         }
 
-        // GET: Expenses/Delete/5
+        // Shows the Delete Expense confirmation page (only payer can delete)
         // Allow payer to delete regardless of settlement status.
         public IActionResult Delete(int id)
         {
@@ -170,7 +173,7 @@ namespace SharedHousingApp.Controllers
             return View(expense); // Confirmation view
         }
 
-        // POST: Expenses/Delete/5
+        // Handles deletion of an expense (only payer can delete)
         // Allow payer to delete regardless of settlement status.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

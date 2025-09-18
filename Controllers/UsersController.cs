@@ -15,12 +15,14 @@ namespace SharedHousingApp.Controllers
             _context = context;
         }
 
+        // Shows the Register form
         [HttpGet]
         public IActionResult Register()
         {
             return View();
         }
 
+        // Handles registration form submission (hashes password before saving)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Register(User user)
@@ -35,12 +37,14 @@ namespace SharedHousingApp.Controllers
             return View(user);
         }
 
+        // Shows the Login form
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        // Handles login form submission (validates credentials and sets session)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Login(User loginUser)
@@ -69,6 +73,7 @@ namespace SharedHousingApp.Controllers
             return View(loginUser);
         }
 
+        // Logs the user out by clearing the session
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

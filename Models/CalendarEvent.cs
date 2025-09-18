@@ -9,7 +9,7 @@ namespace SharedHousingApp.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
-        public string Title { get; set; }  = string.Empty;  // ✅ Fixes warning
+        public string Title { get; set; }  = string.Empty;  // Fixes warning
 
         public string? Description { get; set; }
 
